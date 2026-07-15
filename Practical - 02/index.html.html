@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bill Calculator</title>
+<script>
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --primary: #8b5cf6;
+    --primary-hover: #7c3aed;
+    --success: #10b981;
+    --success-hover: #059669;
+    --danger: #f43f5e;
+    --danger-hover: #e11d48;
+    
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #1e1b4b;
+    --text-muted: #6b7280;
+    --border: #cbd5e1;
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    --radius: 14px;
+
+    --header-bg: #1e1b4b; /* deep indigo */
+    --subbar-bg: #312e81; /* medium-deep indigo (shades match!) */
+    --brand-accent: #c084fc; /* light purple */
+
+    /* Panel Left: Violet */
+    --bg-panel-left: #faf5ff;
+    --border-panel-left: #8b5cf6;
+    --border-edge-left: #e9d5ff;
+
+    /* Panel Middle: Cyan/Blue (Replaced Pink!) */
+    --bg-panel-middle: #f0f9ff;
+    --border-panel-middle: #0ea5e9;
+    --border-edge-middle: #bae6fd;
+    --table-header-bg: #e0f2fe;
+    --table-header-text: #0369a1;
+
+    /* Panel Right: Amber/Orange */
+    --bg-panel-right: #fffbeb;
+    --border-panel-right: #f59e0b;
+    --border-edge-right: #fde68a;
+    --receipt-header-bg: #faf5ff;
+    --receipt-header-text: #7c3aed;
+
+    /* Summary Box */
+    --bg-summary: #ecfdf5;
+    --border-summary: #10b981;
+    --border-edge-summary: #a7f3d0;
+    --text-summary: #065f46;
+    --text-summary-bold: #064e3b;
+}
+
+[data-theme="dark"] {
+    --bg-main: #0b0f19; /* dark slate */
+    --bg-card: #151d30; /* card slate */
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #1e293b;
+    --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+
+    --header-bg: #090514; /* very dark violet */
+    --subbar-bg: #1e1b4b; /* dark violet (shades match!) */
+    --brand-accent: #c084fc;
+
+    /* Panel Left: Violet dark */
+    --bg-panel-left: #1d192b;
+    --border-panel-left: #a78bfa;
+    --border-edge-left: #3c2a63;
+
+    /* Panel Middle: Cyan/Blue dark */
+    --bg-panel-middle: #0e2030;
+    --border-panel-middle: #38bdf8;
+    --border-edge-middle: #153e5e;
+    --table-header-bg: #15324d;
+    --table-header-text: #38bdf8;
+
+    /* Panel Right: Amber dark */
+    --bg-panel-right: #292010;
+    --border-panel-right: #fbbf24;
+    --border-edge-right: #5c441a;
+    --receipt-header-bg: #1d192b;
+    --receipt-header-text: #a78bfa;
+
+    /* Summary Box dark */
+    --bg-summary: #062f21;
+    --border-summary: #34d399;
+    --border-edge-summary: #105e44;
+    --text-summary: #a7f3d0;
+    --text-summary-bold: #34d399;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                var(--bg-main);
+    padding: 24px 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.wrap {
+    max-width: 1280px;
+    width: 100%;
+    margin: auto;
+    background: var(--bg-card);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.top {
+    background: var(--header-bg);
+    color: #fff;
+    padding: 24px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s ease;
+}
+
+.top .brand {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.top .brand span {
+    color: var(--brand-accent);
+}
+
+.top p {
+    font-size: 13px;
+    color: #e0e7ff;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.subbar {
+    background: var(--subbar-bg);
+    color: #e0e7ff;
+    padding: 12px 28px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: background 0.3s ease;
+}
+
+.box {
+    padding: 28px;
+}
+
+/* 3-Column Layout */
+.box-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+@media (min-width: 1200px) {
+    .box-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr 0.85fr;
+        gap: 28px;
+        align-items: start;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .box-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+    .panel-right {
+        grid-column: span 2;
+    }
+}
+
+/* Panels with colorful borders and soft tint backgrounds */
+.panel-left, .panel-middle, .panel-right {
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.panel-left {
+    background: var(--bg-panel-left);
+    border-left: 5px solid var(--border-panel-left);
+    border-color: var(--border-edge-left);
+}
+
+.panel-middle {
+    background: var(--bg-panel-middle);
+    border-left: 5px solid var(--border-panel-middle);
+    border-color: var(--border-edge-middle);
+}
+
+.panel-right {
+    background: var(--bg-panel-right);
+    border-left: 5px solid var(--border-panel-right);
+    border-color: var(--border-edge-right);
+}
+
+.sectionTitle {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 4px 0 18px 0;
+    padding-bottom: 6px;
+    display: inline-block;
+}
+
+.panel-left .sectionTitle {
+    border-bottom: 3px solid var(--border-panel-left);
+}
+
+.panel-middle .sectionTitle {
+    border-bottom: 3px solid var(--border-panel-middle);
+}
+
+.panel-right .sectionTitle {
+    border-bottom: 3px solid var(--border-panel-right);
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text-main);
+}
+
+input, select {
+    width: 100%;
+    padding: 11px 14px;
+    margin-bottom: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--text-main);
+    background-color: var(--bg-card);
+    transition: all 0.2s ease-in-out;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* MCQ Styled Payment Cards */
+.payment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.pay-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 10px;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text-main);
+    text-align: center;
+}
+
+.pay-card input[type="radio"] {
+    display: none;
+}
+
+.pay-card:hover {
+    border-color: var(--primary);
+    background: var(--bg-panel-left);
+    transform: translateY(-1px);
+}
+
+.pay-card:has(input[type="radio"]:checked) {
+    border-color: var(--primary);
+    background: var(--bg-panel-left);
+    color: var(--primary-hover);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);
+}
+
+#upiBox {
+    background: var(--bg-panel-left);
+    border: 2px solid var(--border-edge-left);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--border-panel-left);
+}
+
+#upiBox label {
+    color: var(--border-panel-left);
+}
+
+.add-row {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 0.9fr auto;
+    gap: 10px;
+    align-items: start;
+    margin-bottom: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+#addBtn {
+    background: var(--border-panel-middle);
+    color: #fff;
+    height: 43px;
+}
+
+#addBtn:hover {
+    background: var(--border-panel-middle);
+    opacity: 0.9;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    margin-bottom: 24px;
+    background: var(--bg-card);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+th, td {
+    padding: 12px 14px;
+    font-size: 13px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-main);
+}
+
+th {
+    background: var(--table-header-bg);
+    color: var(--table-header-text);
+    font-weight: 700;
+}
+
+tbody tr:hover {
+    background: var(--bg-panel-middle);
+}
+
+.delBtn {
+    background: transparent;
+    color: var(--danger);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+.delBtn:hover {
+    background: var(--danger);
+    color: #fff;
+    border-color: var(--danger);
+}
+
+.summary {
+    border: 1px solid var(--border-edge-summary);
+    border-radius: 12px;
+    padding: 20px;
+    background: var(--bg-summary);
+    margin-bottom: 20px;
+    border-left: 4px solid var(--border-summary);
+}
+
+.line {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--text-summary);
+}
+
+.line span:last-child {
+    font-weight: 700;
+    color: var(--text-summary-bold);
+}
+
+.line.grand {
+    font-size: 19px;
+    font-weight: 800;
+    border-top: 1px dashed var(--border-edge-summary);
+    margin-top: 12px;
+    padding-top: 16px;
+}
+
+.line.grand span {
+    color: var(--text-summary-bold) !important;
+}
+
+.line.grand span:last-child {
+    color: var(--border-summary) !important;
+}
+
+.btnrow {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+#billBtn {
+    background: var(--success);
+    color: #fff;
+    flex: 1.5;
+}
+
+#billBtn:hover {
+    background: var(--success-hover);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+#printBtn {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 1.5px solid var(--border);
+    flex: 1;
+}
+
+#printBtn:hover {
+    background: var(--bg-main);
+    border-color: var(--text-muted);
+}
+
+#resetBtn {
+    background: var(--bg-card);
+    color: var(--danger);
+    border: 1.5px solid var(--border);
+    flex: 1;
+}
+
+#resetBtn:hover {
+    background: var(--bg-panel-left);
+    border-color: var(--border-panel-left);
+}
+
+/* Receipt Column Placeholder */
+.receipt-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--border-panel-right);
+    border-radius: var(--radius);
+    padding: 40px 20px;
+    background: var(--bg-panel-right);
+    min-height: 250px;
+    text-align: center;
+}
+
+.receipt {
+    padding: 24px;
+    border: 1px dashed var(--primary);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.receipt h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: var(--text-main);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 8px;
+    font-weight: 800;
+}
+
+.receipt p {
+    font-size: 13px;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.receipt table {
+    margin: 16px 0;
+    background: var(--bg-card);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.receipt table th, .receipt table td {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    text-align: left;
+    color: var(--text-main);
+}
+
+.receipt table th {
+    background: var(--receipt-header-bg);
+    color: var(--receipt-header-text);
+    font-weight: 700;
+}
+
+.note {
+    font-size: 12px;
+    color: var(--border-panel-right);
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+.footer {
+    text-align: center;
+    margin-top: auto;
+    padding: 24px;
+    color: var(--primary);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-panel-left);
+    line-height: 1.6;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .receipt, .receipt * {
+        visibility: visible;
+    }
+    .receipt {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        border: none;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="top">
+<div>
+<div class="brand">Ved<span> Bills</span></div>
+<p>Order No: <span id="orderNo"></span> &nbsp;|&nbsp; <span id="orderDate"></span></p>
+</div>
+<button class="theme-toggle" onclick="toggleTheme()" id="themeToggleBtn">🌙 Dark Mode</button>
+</div>
+
+<div class="subbar">Checkout &nbsp;›&nbsp; Billing Summary</div>
+
+<div class="box box-grid">
+
+<div class="panel-left">
+<div class="sectionTitle">Delivery Details</div>
+
+<label>Customer Name</label>
+<input type="text" id="custName" placeholder="Enter customer name">
+
+<div class="two-col">
+<div>
+<label>Phone Number</label>
+<input type="text" id="custPhone" placeholder="10 digit mobile number" maxlength="10">
+</div>
+
+<div>
+<label>Delivery Pincode</label>
+<input type="text" id="pincode" placeholder="6 digit pincode">
+</div>
+</div>
+
+<label>Delivery Address</label>
+<input type="text" id="custAddress" placeholder="House no, street, area, city">
+
+<div class="two-col">
+<div>
+<label>Membership</label>
+<select id="membership">
+<option value="none">No Membership</option>
+<option value="prime">Prime Member (10% off)</option>
+<option value="prime_plus">Prime Plus (25% off)</option>
+</select>
+</div>
+
+<div>
+<label>Payment Mode</label>
+<div class="payment-grid">
+  <label class="pay-card">
+    <input type="radio" name="payModeRadio" value="Cash on Delivery" checked onchange="toggleUpiOptions()">
+    <span>💵 CoD</span>
+  </label>
+  <label class="pay-card">
+    <input type="radio" name="payModeRadio" value="UPI" onchange="toggleUpiOptions()">
+    <span>⚡ UPI</span>
+  </label>
+  <label class="pay-card">
+    <input type="radio" name="payModeRadio" value="Debit/Credit Card" onchange="toggleUpiOptions()">
+    <span>💳 Card</span>
+  </label>
+  <label class="pay-card">
+    <input type="radio" name="payModeRadio" value="Wallet" onchange="toggleUpiOptions()">
+    <span>💼 Wallet</span>
+  </label>
+</div>
+</div>
+</div>
+
+<div id="upiBox" style="display:none;">
+<label>Pay Using</label>
+<select id="upiApp" onchange="toggleUpiId()">
+<option value="Google Pay">Google Pay</option>
+<option value="PhonePe">PhonePe</option>
+<option value="Paytm">Paytm</option>
+<option value="BHIM UPI">BHIM UPI</option>
+<option value="Amazon Pay UPI">Amazon Pay UPI</option>
+<option value="other">Enter UPI ID manually</option>
+</select>
+
+<input type="text" id="upiId" placeholder="yourname@okbank" style="display:none;">
+</div>
+
+<label>Promo Code</label>
+<input type="text" id="promo" placeholder="e.g. SAVE100">
+</div>
+
+<div class="panel-middle">
+<div class="sectionTitle">Your Cart</div>
+
+<label>Add Item to Cart</label>
+<div class="add-row">
+<input type="text" id="itemName" placeholder="Item name">
+<input type="number" id="itemPrice" placeholder="Price">
+<input type="number" id="itemQty" placeholder="Qty" value="1">
+<button id="addBtn" onclick="addItem()">Add</button>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Price</th>
+<th>Qty</th>
+<th>Amount</th>
+<th></th>
+</tr>
+</thead>
+<tbody id="cartBody"></tbody>
+</table>
+
+<div class="sectionTitle">Price Details</div>
+
+<div class="summary">
+
+<div class="line">
+<span>Items in cart</span>
+<span id="totalItems">0</span>
+</div>
+
+<div class="line">
+<span>Cart Value</span>
+<span>Rs. <span id="cartValue">0.00</span></span>
+</div>
+
+<div class="line">
+<span>Delivery Charge</span>
+<span>Rs. <span id="deliveryCharge">150.00</span></span>
+</div>
+
+<div class="line">
+<span>GST (18%)</span>
+<span>Rs. <span id="taxAmt">0.00</span></span>
+</div>
+
+<div class="line">
+<span>Membership Discount</span>
+<span>- Rs. <span id="memberDisc">0.00</span></span>
+</div>
+
+<div class="line">
+<span>Promo Discount</span>
+<span>- Rs. <span id="promoDisc">0.00</span></span>
+</div>
+
+<div class="line grand">
+<span>Payable Amount</span>
+<span>Rs. <span id="finalAmt">0.00</span></span>
+</div>
+
+<p class="note" id="freeDelNote"></p>
+
+</div>
+
+<div class="btnrow">
+<button id="billBtn" onclick="makeReceipt()">Generate Bill</button>
+<button id="printBtn" onclick="printReceipt()">Print</button>
+<button id="resetBtn" onclick="resetAll()">Reset</button>
+</div>
+</div>
+
+<div class="panel-right">
+<div class="sectionTitle">Last Generated Bill</div>
+
+<div class="receipt-placeholder" id="receiptPlaceholder">
+  <span style="font-size: 48px; margin-bottom: 12px; display: block;">🧾</span>
+  <p style="font-weight: 700; color: #b45309; margin-bottom: 4px;">No Bill Generated Yet</p>
+  <p style="font-size: 12px; color: #d97706; text-align: center; max-width: 240px; margin: 0 auto; line-height: 1.4;">Fill details, add items, and click 'Generate Bill' to see the receipt here.</p>
+</div>
+
+<div class="receipt" id="receiptBox" style="display:none;"></div>
+</div>
+
+</div>
+</div>
+
+<script src="shop-billing.js"></script>
+<div class="footer">
+    <strong>Designed By:</strong><br>
+    Vedant Nawghare<br>
+    PRN: 24070521047<br>
+    Batch A2
+</div>
+</body>
+</html>
