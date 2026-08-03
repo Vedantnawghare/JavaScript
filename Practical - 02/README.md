@@ -87,6 +87,8 @@ The case study has been implemented using the same project files:
 
 ![Output 2](output2.png)
 
+![Output 3](output3.png)
+
 Screenshots attached in the repo folder.
 
 # Result / Conclusion
