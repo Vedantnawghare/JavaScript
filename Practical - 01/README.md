@@ -84,7 +84,7 @@ The case study has been implemented using the same project files:
 
 **Output 1:** Department landing page.
 
-![Output 1](Practical - 01/output1.png)
+![Output 1](Practical-01/output1.png)
 
 **Output 2:** Student information page with generated details and JavaScript execution.
 
