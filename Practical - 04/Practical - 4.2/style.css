@@ -1,0 +1,539 @@
+/* ==========================================================================
+   Blue Aesthetic Vector UI - Vehicle Registration Validator
+   With GT Racing Supercar Spoiler Outline (Matching Latest Attachment)
+   Designed by: Vedant Nawghare (PRN: 24070521047)
+   ========================================================================== */
+
+:root {
+    --bg-base: #8da9c4;
+    --navy-dark: #061a40;
+    --navy-blue: #1b3b6f;
+    --teal-slate: #588b8b;
+    --cyan-line: #64dfdf;
+
+    --card-bg: rgba(255, 255, 255, 0.88);
+    --card-border: rgba(255, 255, 255, 0.6);
+
+    --text-heading: #061a40;
+    --text-body: #1c2541;
+    --text-muted: #475569;
+
+    --valid-bg: #dcfce7;
+    --valid-border: #22c55e;
+    --valid-text: #15803d;
+
+    --invalid-bg: #ffe4e6;
+    --invalid-border: #ef4444;
+    --invalid-text: #b91c1c;
+
+    --pending-bg: rgba(248, 250, 252, 0.85);
+
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-heading: 'Orbitron', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--bg-base);
+    color: var(--text-body);
+    font-family: var(--font-sans);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Blue Aesthetic Background
+   -------------------------------------------------------------------------- */
+.blue-aesthetic-bg {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.bg-svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   App Layout & Header
+   -------------------------------------------------------------------------- */
+.app-layout-container {
+    width: 100%;
+    max-width: 1020px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+    position: relative;
+    z-index: 1;
+}
+
+.app-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.prominent-header-badge {
+    background: rgba(6, 26, 64, 0.15);
+    border: 2px solid rgba(6, 26, 64, 0.35);
+    color: var(--navy-dark);
+    padding: 10px 24px;
+    border-radius: 40px;
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 8px 25px rgba(6, 26, 64, 0.12);
+}
+
+.live-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #22c55e;
+    animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.header-badge-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    color: var(--navy-dark);
+    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
+}
+
+.header-subtitle {
+    font-size: 0.95rem;
+    color: var(--navy-blue);
+    font-weight: 600;
+    text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
+}
+
+/* --------------------------------------------------------------------------
+   Dashboard Card
+   -------------------------------------------------------------------------- */
+.dashboard-card {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 2.2rem;
+    backdrop-filter: blur(16px);
+    box-shadow: 
+        0 20px 45px rgba(6, 26, 64, 0.12),
+        0 4px 12px rgba(0, 0, 0, 0.03);
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 2.2rem;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card:hover {
+    box-shadow: 0 25px 55px rgba(6, 26, 64, 0.18);
+}
+
+/* --------------------------------------------------------------------------
+   Left Visual Side: GT Racing Supercar Line Art (Matching Latest Attachment)
+   -------------------------------------------------------------------------- */
+.left-visual-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.car-vector-card {
+    width: 100%;
+    height: 195px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    border: 3px solid #ffffff;
+    box-shadow: 0 10px 25px rgba(6, 26, 64, 0.2);
+    background: #080e1c;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.car-outline-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.car-vector-card:hover .car-outline-svg {
+    transform: scale(1.03);
+}
+
+.rto-detector-tag {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(6, 26, 64, 0.88);
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Authentic Indian License Plate Preview */
+.license-plate-card {
+    background: #ffffff;
+    border: 3.5px solid #061a40;
+    border-radius: 14px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 20px rgba(6, 26, 64, 0.12);
+}
+
+.ind-strip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px solid #cbd5e1;
+    padding-right: 12px;
+}
+
+.flag {
+    font-size: 1.1rem;
+}
+
+.ind-text {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: #1e3a8a;
+}
+
+.plate-number {
+    font-family: var(--font-mono);
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #061a40;
+    letter-spacing: 4px;
+    display: flex;
+    gap: 8px;
+}
+
+.plate-chips {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    width: 100%;
+}
+
+.chip {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(6, 26, 64, 0.15);
+    color: var(--navy-blue);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 4px 2px;
+    border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   Right Form Side
+   -------------------------------------------------------------------------- */
+.right-form-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.input-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--navy-dark);
+    text-transform: uppercase;
+}
+
+.input-pill {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 50px;
+    padding: 5px 6px 5px 18px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+.input-pill:focus-within {
+    border-color: var(--navy-blue);
+    box-shadow: 0 0 0 4px rgba(27, 59, 111, 0.15);
+}
+
+/* Target Input ID #regNumber */
+#regNumber {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-mono);
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--navy-dark);
+    padding: 0.5rem 0;
+}
+
+#regNumber::placeholder {
+    color: #94a3b8;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Target Button ID #validateBtn */
+#validateBtn {
+    background: linear-gradient(135deg, var(--navy-blue), var(--navy-dark));
+    color: #ffffff;
+    border: none;
+    outline: none;
+    padding: 0.75rem 1.6rem;
+    border-radius: 40px;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(6, 26, 64, 0.3);
+}
+
+#validateBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(6, 26, 64, 0.45);
+}
+
+#validateBtn:active {
+    transform: scale(0.97);
+}
+
+/* Target Result ID #result */
+.result {
+    padding: 0.85rem 1.2rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(6, 26, 64, 0.15);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: center;
+    transition: all 0.35s ease;
+}
+
+.result.success {
+    background: var(--valid-bg);
+    border-color: var(--valid-border);
+    color: var(--valid-text);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+.result.error {
+    background: var(--invalid-bg);
+    border-color: var(--invalid-border);
+    color: var(--invalid-text);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    animation: shake 0.35s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Checklist Grid System (Target IDs #rule1 to #rule6 & .icon)
+   -------------------------------------------------------------------------- */
+.checklist-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.checklist-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--navy-dark);
+    letter-spacing: 0.5px;
+}
+
+.rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+}
+
+/* Target Rule Element Class: .rule */
+.rule {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.65rem 0.85rem;
+    border-radius: 10px;
+    background: var(--pending-bg);
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #cbd5e1;
+    color: var(--text-body);
+    font-size: 0.82rem;
+    transition: all 0.3s ease;
+}
+
+/* Target Icon class inside rule: .icon */
+.icon {
+    font-size: 0.95rem;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rule-label {
+    font-weight: 600;
+}
+
+/* Rule States handled by JS */
+
+.rule.pending {
+    background: var(--pending-bg);
+    border-left-color: #94a3b8;
+    color: var(--text-muted);
+}
+
+.rule.valid {
+    background: var(--valid-bg);
+    border-color: rgba(34, 197, 94, 0.3);
+    border-left-color: var(--valid-border);
+    color: var(--valid-text);
+}
+
+.rule.valid .icon {
+    color: var(--valid-border);
+}
+
+.rule.invalid {
+    background: var(--invalid-bg);
+    border-color: rgba(239, 68, 68, 0.3);
+    border-left-color: var(--invalid-border);
+    color: var(--invalid-text);
+    animation: shake 0.35s ease;
+}
+
+.rule.invalid .icon {
+    color: var(--invalid-border);
+}
+
+/* --------------------------------------------------------------------------
+   Designer Credit Footer (Vedant Nawghare - PRN: 24070521047)
+   -------------------------------------------------------------------------- */
+.designer-footer {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 40px;
+    padding: 0.8rem 1.6rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(6, 26, 64, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.credit-label {
+    font-size: 0.85rem;
+    color: var(--navy-dark);
+    font-weight: 600;
+}
+
+.credit-name {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--navy-blue);
+}
+
+.prn-badge {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--navy-blue);
+    background: rgba(27, 59, 111, 0.08);
+    padding: 3px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(27, 59, 111, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   Animations & Responsive Layout
+   -------------------------------------------------------------------------- */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-4px); }
+}
+
+@media (max-width: 850px) {
+    .dashboard-card {
+        grid-template-columns: 1fr;
+        padding: 1.6rem;
+    }
+
+    .header-badge-title {
+        font-size: 1.05rem;
+    }
+}
+
+@media (max-width: 550px) {
+    .rules-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .designer-footer {
+        flex-direction: column;
+        gap: 6px;
+        text-align: center;
+    }
+}
