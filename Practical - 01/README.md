@@ -80,17 +80,7 @@ The case study has been implemented using the same project files:
 
 # Output
 
-### Case Study Output
-
-**Output 1:** Department landing page.
-
-![Output 1](Practical-01/output1.png)
-
-**Output 2:** Student information page with generated details and JavaScript execution.
-
-![Output 2](images/output2.png)
-
----
+Screenshots attached in the repo folder.
 
 # Result / Conclusion
 
