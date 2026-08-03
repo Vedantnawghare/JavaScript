@@ -2,6 +2,7 @@
 
 **Student Name:** Vedant Nawghare  
 **PRN:** 24070521047 
+
 **File Path:** `Practical-01/index.html` | `Practical-01/style.css` | `Practical-01/script.js`
 
 ---
@@ -75,8 +76,10 @@ Files used:
 ### Case Study Output
 
 ```
-<img width="1919" height="995" alt="image" src="https://github.com/user-attachments/assets/40579269-c70e-4747-a36b-aa61d0d50263" />
-<img width="1919" height="1045" alt="image" src="https://github.com/user-attachments/assets/a1c3b840-d214-42c9-9df5-5ea29e4e4661" />
+<img width="1919" height="1042" alt="image" src="https://github.com/user-attachments/assets/54b916e6-d94f-476e-9816-7e9dfab80ebe" />
+
+<img width="1919" height="1040" alt="image" src="https://github.com/user-attachments/assets/a9c7eedd-1b81-40c8-a680-1cece7090a51" />
+
 ---
 
 # Result / Conclusion
