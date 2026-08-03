@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome Checker | Vedant Nawghare</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Document.write Interceptor to preserve page structure and styling -->
+    <script>
+        (function() {
+            let writeBuffer = '';
+            const originalWrite = document.write;
+            
+            document.write = function(content) {
+                // If content starts with <h2>, reset buffer for new check
+                if (content.toLowerCase().includes('<h2>')) {
+                    writeBuffer = '';
+                }
+                writeBuffer += content;
+                
+                const resultCard = document.getElementById('result-card');
+                if (resultCard) {
+                    let enhancedHTML = writeBuffer;
+                    
+                    // Style the Word display nicely
+                    enhancedHTML = enhancedHTML.replace(
+                        /<b>Word :<\/b>\s*([^<]+)/gi,
+                        '<b>Word :</b> <span class="result-card-word-val">$1</span>'
+                    );
+                    
+                    // Format Result status badges with icons and colors
+                    if (enhancedHTML.includes('Not a Palindrome')) {
+                        enhancedHTML = enhancedHTML.replace(
+                            /<b>Result :<\/b>\s*Not a Palindrome/gi,
+                            '<br><div class="result-status-badge status-not-palindrome">❌ Not a Palindrome</div>'
+                        );
+                    } else if (enhancedHTML.includes('Palindrome')) {
+                        enhancedHTML = enhancedHTML.replace(
+                            /<b>Result :<\/b>\s*Palindrome/gi,
+                            '<br><div class="result-status-badge status-is-palindrome">✨ It is a Palindrome!</div>'
+                        );
+                    }
+                    
+                    // Append interactive mirror comparison breakdown
+                    const wordInput = document.getElementById('word');
+                    if (wordInput && wordInput.value) {
+                        const cleanWord = wordInput.value.trim().toLowerCase();
+                        const reversedWord = cleanWord.split('').reverse().join('');
+                        enhancedHTML += `
+                            <div class="mirror-visualizer">
+                                <span class="mirror-part">${cleanWord}</span>
+                                <span class="mirror-icon">⇄</span>
+                                <span class="mirror-part">${reversedWord}</span>
+                            </div>
+                        `;
+                    }
+                    
+                    resultCard.innerHTML = enhancedHTML;
+                    resultCard.style.display = 'block';
+                    resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    originalWrite.call(document, content);
+                }
+            };
+        })();
+    </script>
+    
+    <!-- Load the external script_f.js as required without modifications -->
+    <script src="script_f.js"></script>
+</head>
+<body>
+
+    <!-- Ambient Glowing Background Elements -->
+    <div class="bg-ambient">
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="glow-orb glow-orb-3"></div>
+        <div class="bg-grid"></div>
+    </div>
+
+    <!-- Main Application Glass Container -->
+    <div class="app-wrapper">
+        <main class="main-card">
+            
+            <!-- Card Header -->
+            <header class="card-header">
+                <div class="badge-tag">
+                    <span class="pulse-dot"></span>
+                    Practical - 04
+                </div>
+                <h1 class="main-title">Palindrome Checker</h1>
+                <p class="subtitle">Test if any word reads identically forward and backward</p>
+            </header>
+
+            <!-- Input Form Section -->
+            <div class="form-group">
+                <div class="input-label-wrapper">
+                    <label for="word" class="custom-label">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="4 7 4 4 20 4 20 7"></polyline>
+                            <line x1="9" y1="20" x2="15" y2="20"></line>
+                            <line x1="12" y1="4" x2="12" y2="20"></line>
+                        </svg>
+                        Enter a Word
+                    </label>
+                    <span class="char-counter" id="char-count">0 / 20</span>
+                </div>
+                
+                <div class="input-container">
+                    <input type="text" id="word" class="custom-input" placeholder="e.g. racecar, madam, level..." maxlength="20" autocomplete="off">
+                </div>
+
+                <!-- Preset Example Quick Test Pills -->
+                <div class="example-pills">
+                    <span class="pill-title">Try:</span>
+                    <button type="button" class="pill-btn" onclick="setWord('racecar')">racecar</button>
+                    <button type="button" class="pill-btn" onclick="setWord('madam')">madam</button>
+                    <button type="button" class="pill-btn" onclick="setWord('kayak')">kayak</button>
+                    <button type="button" class="pill-btn" onclick="setWord('hello')">hello</button>
+                </div>
+            </div>
+
+            <!-- Submit Button (compatible with script_f.js) -->
+            <div class="button-container">
+                <input type="button" class="btn-submit" value="Check Palindrome" onclick="checkPalindrome()">
+            </div>
+
+            <!-- Dynamic Result Card -->
+            <div class="result-display-wrapper">
+                <div id="result-card" class="result-card"></div>
+            </div>
+
+            <!-- Footer / Designer Credit Section -->
+            <footer class="designer-credit-container">
+                <div class="designer-card">
+                    <div class="credit-title">Designed by:-</div>
+                    <div class="designer-name">Vedant Nawghare</div>
+                    <div class="designer-id">24070521047</div>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- UI Helper Scripts for Character Count & Keyboard Shortcuts -->
+    <script>
+        const wordInput = document.getElementById('word');
+        const charCount = document.getElementById('char-count');
+
+        if (wordInput && charCount) {
+            wordInput.addEventListener('input', function() {
+                const len = this.value.length;
+                charCount.textContent = `${len} / 20`;
+                if (len > 0) {
+                    charCount.style.color = 'var(--secondary)';
+                } else {
+                    charCount.style.color = 'var(--text-dim)';
+                }
+            });
+
+            // Trigger check on Enter key press
+            wordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPalindrome();
+                }
+            });
+        }
+
+        function setWord(val) {
+            if (wordInput) {
+                wordInput.value = val;
+                wordInput.dispatchEvent(new Event('input'));
+                wordInput.focus();
+                checkPalindrome();
+            }
+        }
+    </script>
+</body>
+</html>
