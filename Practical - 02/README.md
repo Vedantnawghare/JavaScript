@@ -1,7 +1,8 @@
 # Practical - 02
 
-**Student Name:** Your Name  
-**PRN:** Your PRN  
+**Student Name:** Vedant Nawghare  
+**PRN:** 24070521047
+
 **File Path:** `Practical-02/index.html` | `Practical-02/style.css` | `Practical-02/script.js`
 
 ---
@@ -55,23 +56,6 @@ The application provides an interactive shopping interface where users can:
 - Calculate Subtotal, GST, and Grand Total automatically
 - View the generated invoice dynamically on the webpage
 
-> **Note:** Attach the output screenshot inside the `images` folder. The screenshot must clearly display:
->
-> - Program Output
-> - Name
-> - PRN
-> - File Path
-
-Example:
-
-```text
-images/experiment-output.png
-```
-
-![Experiment Output](images/experiment-output.png)
-
----
-
 # Case Study Title
 
 Online Shopping Billing Calculator using Modern JavaScript (ES6)
@@ -122,13 +106,9 @@ The billing calculator successfully performs the following tasks:
 
 Example:
 
-```text
-images/case-study-output.png
-```
+<img width="1919" height="996" alt="image" src="https://github.com/user-attachments/assets/fee12b44-2de9-4433-9984-ec7c079c8d7b" />
+<img width="782" height="380" alt="image" src="https://github.com/user-attachments/assets/b8bc2135-e3dc-4a28-b060-7bf4fad35efc" />
 
-![Case Study Output](images/case-study-output.png)
-
----
 
 # Result / Conclusion
 
