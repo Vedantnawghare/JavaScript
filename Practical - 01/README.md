@@ -1,7 +1,7 @@
 # Practical - 01
 
-**Student Name:** Your Name  
-**PRN:** Your PRN  
+**Student Name:** Vedant Nawghare  
+**PRN:** 24070521047 
 **File Path:** `Practical-01/index.html` | `Practical-01/style.css` | `Practical-01/script.js`
 
 ---
@@ -42,19 +42,6 @@ The implementation demonstrates:
 
 ---
 
-# Output
-
-### Experiment Output
-
-> Add the screenshot inside the `images` folder.
-
-```
-images/experiment-output.png
-```
-
-![Experiment Output](images/experiment-output.png)
-
----
 
 # Case Study Title
 
@@ -88,11 +75,8 @@ Files used:
 ### Case Study Output
 
 ```
-images/case-study-output.png
-```
-
-![Case Study Output](images/case-study-output.png)
-
+<img width="1919" height="995" alt="image" src="https://github.com/user-attachments/assets/40579269-c70e-4747-a36b-aa61d0d50263" />
+<img width="1919" height="1045" alt="image" src="https://github.com/user-attachments/assets/a1c3b840-d214-42c9-9df5-5ea29e4e4661" />
 ---
 
 # Result / Conclusion
