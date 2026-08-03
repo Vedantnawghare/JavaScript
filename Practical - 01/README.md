@@ -79,7 +79,7 @@ The case study has been implemented using the same project files:
 ---
 
 # Output
-
+![Output 1](/output1.png)
 Screenshots attached in the repo folder.
 
 # Result / Conclusion
