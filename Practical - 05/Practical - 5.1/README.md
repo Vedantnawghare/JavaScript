@@ -69,3 +69,12 @@ A shopping cart calculator is developed using JavaScript arrays and array method
 Practical-05/
 └── Practical-5.1/
     └── index.html
+
+
+## Result
+
+The shopping cart calculator was successfully implemented using JavaScript arrays and array methods. The practical demonstrates how push(), forEach(), map(), filter(), and reduce() can be used to process and manipulate data dynamically.
+
+## Conclusion
+
+This practical provided an understanding of JavaScript arrays and their commonly used methods. The shopping cart example demonstrated how these methods can be applied to solve real-world problems involving data storage, filtering, transformation, and calculation.
