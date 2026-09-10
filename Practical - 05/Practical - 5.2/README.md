@@ -84,3 +84,18 @@ Practical-05/
     ├── script.js
     ├── style.css
     └── chalkboard_bg.jpg
+````
+
+## Output
+
+The output of the program is shown below:
+
+![Output](output.png)
+
+## Result
+
+The Student Result Manager was successfully implemented using JavaScript arrays, objects, and array methods. The practical demonstrates how different array manipulation and functional methods can be used to manage and analyze student data dynamically.
+
+## Conclusion
+
+This practical provided an understanding of JavaScript arrays and various array methods. The Student Result Manager demonstrated practical applications of methods such as `push()`, `pop()`, `shift()`, `unshift()`, `splice()`, `slice()`, `map()`, `filter()`, and `forEach()` for data manipulation and result analysis.
