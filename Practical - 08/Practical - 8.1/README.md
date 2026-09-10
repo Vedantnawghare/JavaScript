@@ -1,6 +1,3 @@
-Yes bro, **Practical 8.1** ke exact code ke according same README format:
-
-````md
 # Practical 8.1
 
 ## Experiment Title
@@ -143,6 +140,3 @@ The IronPulse Gym Membership Admission System was successfully implemented using
 ## Conclusion
 
 This practical provided an understanding of JavaScript form validation and event handling. Different events such as `input`, `blur`, `change`, and `submit` were used along with regular expressions and DOM manipulation to create an interactive and user-friendly gym membership admission form.
-
-```
-```
