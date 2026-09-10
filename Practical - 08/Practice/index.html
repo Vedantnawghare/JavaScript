@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopSphere • Mega Store | Deals, Electronics, Fashion & More</title>
+    <!-- Google Fonts for ultra-clean, modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Announcement Bar (Amazon/Flipkart Style) -->
+    <div class="top-announcement">
+        <div class="announcement-content">
+            <span class="announcement-badge">⚡ FESTIVAL DEALS</span>
+            <span class="announcement-text">Get Flat 15% Instant Discount on HDFC & SBI Cards • Free Express Delivery on orders above ₹499</span>
+        </div>
+        <div class="announcement-links">
+            <a href="#help">24x7 Help</a>
+            <a href="#orders">Track Order</a>
+            <a href="#app">Download App</a>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header with Sleek Cart Logo -->
+    <header class="header">
+        <div class="header-inner">
+            <!-- Brand Logo -->
+            <a href="#home" class="brand">
+                <div class="brand-logo-icon">
+                    <svg viewBox="0 0 32 32" width="26" height="26" fill="none">
+                        <rect width="32" height="32" rx="9" fill="url(#brandGrad)" />
+                        <path d="M9 12L16 6L23 12V23C23 24.1 22.1 25 21 25H11C9.9 25 9 24.1 9 23V12Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M13 15C13 16.65 14.34 18 16 18C17.65 18 19 16.65 19 15" stroke="#ffe500" stroke-width="2" stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="brandGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563eb" />
+                                <stop offset="1" stop-color="#1d4ed8" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <div class="brand-title">Shop<span>Sphere</span></div>
+                    <span class="brand-tagline">PLUS ✦</span>
+                </div>
+            </a>
+
+            <!-- Deliver To Location Pill -->
+            <div class="deliver-pill">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <div class="deliver-text">
+                    <span class="deliver-sub">Deliver to</span>
+                    <strong class="deliver-loc">Nagpur 440009</strong>
+                </div>
+            </div>
+
+            <!-- Quick Navigation Links -->
+            <nav class="nav-links">
+                <a href="#home" class="active">Home</a>
+                <a href="#products">Top Deals</a>
+                <a href="#filter">Smart Filter</a>
+                <a href="#bestsellers">Bestsellers</a>
+            </nav>
+
+            <!-- Right Action Icons: Account & Sexy Cart Logo -->
+            <div class="header-actions">
+                <!-- User Account -->
+                <div class="user-action">
+                    <div class="user-avatar">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="action-text">
+                        <span class="action-sub">Hello, Vedant Nawghare</span>
+                        <strong class="action-title">My Account ▾</strong>
+                    </div>
+                </div>
+
+                <!-- SEXY CART LOGO & BUTTON -->
+                <a href="#cart" class="cart-button" title="View Cart">
+                    <div class="cart-icon-container">
+                        <!-- Custom Modern SVG Shopping Cart -->
+                        <svg class="cart-svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="8" cy="21" r="1.5"></circle>
+                            <circle cx="19" cy="21" r="1.5"></circle>
+                            <path d="M2.05 2.05h3l2.4 12.3a2 2 0 0 0 2 1.65h9.45a2 2 0 0 0 1.95-1.55L22.5 7.5H6.2"></path>
+                        </svg>
+                        <!-- Cart Count Badge -->
+                        <span class="cart-badge">3</span>
+                    </div>
+                    <div class="cart-details">
+                        <span class="cart-caption">My Cart</span>
+                        <span class="cart-amount">₹4,898</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub-Header Quick Category Strip -->
+    <div class="category-strip">
+        <div class="category-strip-inner">
+            <span class="cat-pill active">🔥 All Deals</span>
+            <span class="cat-pill">⚡ Mobiles & Gadgets</span>
+            <span class="cat-pill">👕 Fashion & Wardrobe</span>
+            <span class="cat-pill">💻 Laptops & Accessories</span>
+            <span class="cat-pill">📚 Bestselling Books</span>
+            <span class="cat-pill">🎧 Audio & Sound</span>
+            <span class="cat-pill">🏠 Home Essentials</span>
+        </div>
+    </div>
+
+    <main id="home">
+        <!-- Hero Promotional Banner (Amazon/Flipkart Vibe) -->
+        <section class="hero-banner">
+            <div class="banner-content">
+                <div class="banner-tag">
+                    <span class="sparkle-icon">✦</span> MEGA SHOPPING FESTIVAL • LIVE NOW
+                </div>
+                <h2>UNBEATABLE DEALS.<br><span class="gradient-text">DELIVERED TO YOUR DOOR.</span></h2>
+                <p>
+                    Explore thousands of genuine electronics, fashion wear, books, and accessories.
+                    Enjoy lightning-fast delivery and verified buyer protection.
+                </p>
+
+                <!-- Trust Badges -->
+                <div class="trust-strip">
+                    <div class="trust-item">
+                        <span class="trust-icon">⚡</span>
+                        <div>
+                            <strong>Free Express</strong>
+                            <small>Next Day Delivery</small>
+                        </div>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">🛡️</span>
+                        <div>
+                            <strong>100% Genuine</strong>
+                            <small>Verified Brands</small>
+                        </div>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">🔄</span>
+                        <div>
+                            <strong>7-Day Returns</strong>
+                            <small>No Questions Asked</small>
+                        </div>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">💳</span>
+                        <div>
+                            <strong>Secure Pay</strong>
+                            <small>UPI, Cards & EMI</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- E-Commerce Search & Filter Command Dock (Preserving exact form & inputs) -->
+            <section class="filter-card" id="filter">
+                <div class="card-header-bar">
+                    <div class="dock-badge">
+                        <span class="live-dot"></span> LIVE CATALOG SEARCH
+                    </div>
+                    <h3>Search & Instant Filter</h3>
+                    <p>Narrow your products effortlessly by keyword and department.</p>
+                </div>
+
+                <!-- REQUIRED FORM & CONTROLS FOR script.js -->
+                <form id="filterForm" class="ecommerce-form">
+                    <div class="form-row">
+                        <!-- Category Dropdown -->
+                        <div class="field category-field">
+                            <label for="category">CATEGORY</label>
+                            <div class="select-wrapper">
+                                <select id="category">
+                                    <option value="all">All Categories</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="clothing">Clothing</option>
+                                    <option value="books">Books</option>
+                                    <option value="accessories">Accessories</option>
+                                </select>
+                                <span class="select-chevron">▾</span>
+                            </div>
+                        </div>
+
+                        <!-- Search Input Field -->
+                        <div class="field search-field">
+                            <label for="searchBox">PRODUCT NAME</label>
+                            <div class="search-input-wrapper">
+                                <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input
+                                    type="text"
+                                    id="searchBox"
+                                    placeholder="Search headphones, shoes, hoodies, books..."
+                                    autocomplete="off"
+                                >
+                            </div>
+                            <span id="searchError" class="error"></span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="form-actions">
+                        <button type="submit" class="search-btn">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            Search Catalog
+                        </button>
+                        <button type="button" id="clearBtn" class="clear-btn">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                                <path d="M3 3v5h5"></path>
+                            </svg>
+                            Reset Filters
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products-section" id="products">
+            <div class="section-title">
+                <div class="title-left">
+                    <span class="sub-heading">Designed By:- Vedant Nawghare 24070521047</span>
+                    <h2>Today's Featured Products</h2>
+                </div>
+                <!-- REQUIRED ELEMENT FOR script.js -->
+                <div class="count-pill">
+                    <span class="count-pulse"></span>
+                    <span id="productCount">12 products</span>
+                </div>
+            </div>
+
+            <!-- REQUIRED ELEMENT FOR script.js: No Products Found -->
+            <div id="noProducts" class="no-products">
+                <div class="empty-state-icon">
+                    <svg viewBox="0 0 24 24" width="54" height="54" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                </div>
+                <h3>No Matching Products Found</h3>
+                <p>We couldn't find any products matching your search query or selected category.</p>
+                <div class="empty-tips">
+                    <span>💡 Tip: Check your spelling or click "Reset Filters" to view all products.</span>
+                </div>
+            </div>
+
+            <!-- REQUIRED ELEMENT FOR script.js: Product List Grid -->
+            <div class="product-grid" id="productList">
+
+                <!-- 1. Wireless Headphones -->
+                <article class="product-card" data-name="wireless headphones" data-category="electronics">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag deal">HOT DEAL</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-electronics">🎧</div>
+                        <div class="product-info">
+                            <span class="category-tag">Electronics</span>
+                            <h3>Wireless Headphones</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.8 ★</span>
+                                <span class="rating-count">(3,420)</span>
+                            </div>
+                            <p>Noise-cancelling headphones with clear studio-grade sound.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹2,999</strong>
+                                    <span class="mrp-price">₹4,999</span>
+                                    <span class="discount-pill">40% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 2. Smart Watch -->
+                <article class="product-card" data-name="smart watch" data-category="electronics">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag bestseller">BESTSELLER</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-electronics">⌚</div>
+                        <div class="product-info">
+                            <span class="category-tag">Electronics</span>
+                            <h3>Smart Watch</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.7 ★</span>
+                                <span class="rating-count">(2,819)</span>
+                            </div>
+                            <p>Track your daily activity, heart rate, and notifications seamlessly.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹3,499</strong>
+                                    <span class="mrp-price">₹5,999</span>
+                                    <span class="discount-pill">42% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 3. Bluetooth Speaker -->
+                <article class="product-card" data-name="bluetooth speaker" data-category="electronics">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag choice">AMAZON'S CHOICE</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-electronics">🔊</div>
+                        <div class="product-info">
+                            <span class="category-tag">Electronics</span>
+                            <h3>Bluetooth Speaker</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.6 ★</span>
+                                <span class="rating-count">(1,540)</span>
+                            </div>
+                            <p>Portable speaker with deep bass and 16-hour long battery life.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹1,899</strong>
+                                    <span class="mrp-price">₹3,499</span>
+                                    <span class="discount-pill">46% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 4. Gaming Keyboard -->
+                <article class="product-card" data-name="gaming keyboard" data-category="electronics">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag deal">HOT DEAL</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-electronics">⌨️</div>
+                        <div class="product-info">
+                            <span class="category-tag">Electronics</span>
+                            <h3>Gaming Keyboard</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.9 ★</span>
+                                <span class="rating-count">(4,190)</span>
+                            </div>
+                            <p>RGB mechanical keyboard designed for high-precision gaming.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹2,499</strong>
+                                    <span class="mrp-price">₹4,299</span>
+                                    <span class="discount-pill">42% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 5. Classic Hoodie -->
+                <article class="product-card" data-name="classic hoodie" data-category="clothing">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag bestseller">BESTSELLER</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-clothing">🧥</div>
+                        <div class="product-info">
+                            <span class="category-tag">Clothing</span>
+                            <h3>Classic Hoodie</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.5 ★</span>
+                                <span class="rating-count">(980)</span>
+                            </div>
+                            <p>Ultra-comfortable premium cotton hoodie tailored for everyday wear.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹1,299</strong>
+                                    <span class="mrp-price">₹2,499</span>
+                                    <span class="discount-pill">48% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 6. Denim Jacket -->
+                <article class="product-card" data-name="denim jacket" data-category="clothing">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag choice">TRENDING</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-clothing">👕</div>
+                        <div class="product-info">
+                            <span class="category-tag">Clothing</span>
+                            <h3>Denim Jacket</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.6 ★</span>
+                                <span class="rating-count">(720)</span>
+                            </div>
+                            <p>Classic distressed denim style jacket with a tailored modern fit.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹2,199</strong>
+                                    <span class="mrp-price">₹3,999</span>
+                                    <span class="discount-pill">45% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 7. Running Shoes -->
+                <article class="product-card" data-name="running shoes" data-category="clothing">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag bestseller">BESTSELLER</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-clothing">👟</div>
+                        <div class="product-info">
+                            <span class="category-tag">Clothing</span>
+                            <h3>Running Shoes</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.8 ★</span>
+                                <span class="rating-count">(5,310)</span>
+                            </div>
+                            <p>Lightweight breathable shoes for daily running, gym, and training.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹2,799</strong>
+                                    <span class="mrp-price">₹4,999</span>
+                                    <span class="discount-pill">44% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 8. Data Science Handbook -->
+                <article class="product-card" data-name="data science handbook" data-category="books">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag choice">TOP RATED</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-books">📘</div>
+                        <div class="product-info">
+                            <span class="category-tag">Books</span>
+                            <h3>Data Science Handbook</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.9 ★</span>
+                                <span class="rating-count">(1,120)</span>
+                            </div>
+                            <p>A comprehensive guide to statistics, machine learning, and Python.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹799</strong>
+                                    <span class="mrp-price">₹1,499</span>
+                                    <span class="discount-pill">47% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 9. JavaScript Guide -->
+                <article class="product-card" data-name="javascript guide" data-category="books">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag bestseller">BESTSELLER</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-books">📗</div>
+                        <div class="product-info">
+                            <span class="category-tag">Books</span>
+                            <h3>JavaScript Guide</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.9 ★</span>
+                                <span class="rating-count">(2,350)</span>
+                            </div>
+                            <p>Master modern ES6+, async programming, and DOM manipulation.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹649</strong>
+                                    <span class="mrp-price">₹1,199</span>
+                                    <span class="discount-pill">46% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 10. Wireless Mouse -->
+                <article class="product-card" data-name="wireless mouse" data-category="accessories">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag deal">HOT DEAL</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-accessories">🖱️</div>
+                        <div class="product-info">
+                            <span class="category-tag">Accessories</span>
+                            <h3>Wireless Mouse</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.6 ★</span>
+                                <span class="rating-count">(3,100)</span>
+                            </div>
+                            <p>Ergonomic silent-click wireless mouse with precision optical tracking.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹899</strong>
+                                    <span class="mrp-price">₹1,599</span>
+                                    <span class="discount-pill">44% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 11. Leather Wallet -->
+                <article class="product-card" data-name="leather wallet" data-category="accessories">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag choice">TOP PICK</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-accessories">👝</div>
+                        <div class="product-info">
+                            <span class="category-tag">Accessories</span>
+                            <h3>Leather Wallet</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.7 ★</span>
+                                <span class="rating-count">(1,840)</span>
+                            </div>
+                            <p>Handcrafted genuine slim leather wallet with RFID blocking layer.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹599</strong>
+                                    <span class="mrp-price">₹1,299</span>
+                                    <span class="discount-pill">54% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 12. Travel Backpack -->
+                <article class="product-card" data-name="travel backpack" data-category="accessories">
+                    <div class="card-inner">
+                        <div class="card-top-badges">
+                            <span class="badge-tag bestseller">BESTSELLER</span>
+                            <span class="assured-pill">✦ Plus Assured</span>
+                            <button class="wishlist-btn" aria-label="Add to wishlist" type="button">♥</button>
+                        </div>
+                        <div class="product-icon icon-accessories">🎒</div>
+                        <div class="product-info">
+                            <span class="category-tag">Accessories</span>
+                            <h3>Travel Backpack</h3>
+                            <div class="rating-row">
+                                <span class="rating-badge">4.8 ★</span>
+                                <span class="rating-count">(4,620)</span>
+                            </div>
+                            <p>Water-resistant laptop travel backpack with USB charging port.</p>
+                            <div class="pricing-block">
+                                <div class="price-row">
+                                    <strong class="current-price">₹1,599</strong>
+                                    <span class="mrp-price">₹3,299</span>
+                                    <span class="discount-pill">52% OFF</span>
+                                </div>
+                                <span class="delivery-badge">⚡ Free Delivery by <strong>Tomorrow</strong></span>
+                            </div>
+                            <button type="button" class="add-to-cart-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Flipkart / Amazon Inspired Footer -->
+    <footer class="footer">
+        <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <span>Back to top ↑</span>
+        </div>
+        
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Get to Know Us</h4>
+                <a href="#about">About ShopSphere</a>
+                <a href="#careers">Careers</a>
+                <a href="#press">Press Releases</a>
+                <a href="#science">ShopSphere Science</a>
+            </div>
+            <div class="footer-col">
+                <h4>Connect with Us</h4>
+                <a href="#facebook">Facebook</a>
+                <a href="#twitter">Twitter / X</a>
+                <a href="#instagram">Instagram</a>
+            </div>
+            <div class="footer-col">
+                <h4>Make Money with Us</h4>
+                <a href="#sell">Sell on ShopSphere</a>
+                <a href="#affiliate">Affiliate Program</a>
+                <a href="#fulfillment">Fulfilment by ShopSphere</a>
+                <a href="#advertise">Advertise Your Products</a>
+            </div>
+            <div class="footer-col">
+                <h4>Let Us Help You</h4>
+                <a href="#account">Your Account</a>
+                <a href="#returns">Returns Centre</a>
+                <a href="#protection">100% Purchase Protection</a>
+                <a href="#help">Help Center</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+                <div class="footer-brand">
+                    <span>ShopSphere Plus</span>
+                </div>
+                <div class="payment-badges">
+                    <span class="pay-tag">UPI</span>
+                    <span class="pay-tag">VISA</span>
+                    <span class="pay-tag">Mastercard</span>
+                    <span class="pay-tag">RuPay</span>
+                    <span class="pay-tag">NetBanking</span>
+                    <span class="pay-tag">Cash on Delivery</span>
+                </div>
+                <p class="copyright">© 2026 ShopSphere, Inc. or its affiliates • Designed for fast, smart, modern e-commerce shopping.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT PRESERVED EXACTLY AS IS -->
+    <script src="script.js"></script>
+</body>
+</html>
