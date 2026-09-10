@@ -69,7 +69,7 @@ A shopping cart calculator is developed using JavaScript arrays and array method
 Practical-05/
 └── Practical-5.1/
     └── index.html
-
+```
 
 ## Result
 
