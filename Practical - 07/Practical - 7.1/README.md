@@ -111,7 +111,7 @@ The percentage is displayed in the progress card along with a progress bar.
 
 # Output
 
-Output 1
+![Output 1](output1.png)
 
 Screenshots attached in the repo folder.
 
