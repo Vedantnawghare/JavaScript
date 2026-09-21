@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Theme Preference</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            transition: background-color 0.3s, color 0.3s;
+            background-color: #f4f6f9;
+            color: #333333;
+        }
+
+        .dark {
+            background-color: #1e1e2e;
+            color: #f8fafc;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-light {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+
+        .btn-light:hover {
+            background-color: #2563eb;
+        }
+
+        .btn-dark {
+            background-color: #4b5563;
+            color: #ffffff;
+        }
+
+        .btn-dark:hover {
+            background-color: #374151;
+        }
+
+        .btn-clear {
+            background-color: #ef4444;
+            color: #ffffff;
+        }
+
+        .btn-clear:hover {
+            background-color: #dc2626;
+        }
+
+        #message {
+            margin-top: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #4b5563;
+        }
+
+        .dark #message {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="btn-light" onclick="setTheme('light')">Light Theme</button>
+    <button class="btn-dark" onclick="setTheme('dark')">Dark Theme</button>
+    <button class="btn-clear" onclick="clearTheme()">Clear Preference</button>
+
+    <p id="message"></p>
+
+    <script>
+
+        // Load saved theme when page opens
+        window.onload = function () {
+
+            // First check localStorage
+            let savedTheme = localStorage.getItem("theme");
+
+            if (savedTheme) {
+                setTheme(savedTheme);
+            }
+        };
+
+        // Save theme in localStorage
+        function setTheme(theme) {
+
+            // Apply theme
+            if (theme === "dark") {
+                document.body.classList.add("dark");
+            } else {
+                document.body.classList.remove("dark");
+            }
+
+            // Save permanently
+            localStorage.setItem("theme", theme);
+
+            // Also save current session
+            sessionStorage.setItem("currentTheme", theme);
+
+            document.getElementById("message").innerText =
+                "Theme saved: " + theme;
+        }
+
+        // Clear stored preference
+        function clearTheme() {
+
+            localStorage.removeItem("theme");
+            sessionStorage.removeItem("currentTheme");
+
+            document.body.classList.remove("dark");
+
+            document.getElementById("message").innerText =
+                "Theme preference cleared.";
+        }
+
+    </script>
+
+</body>
+</html>
