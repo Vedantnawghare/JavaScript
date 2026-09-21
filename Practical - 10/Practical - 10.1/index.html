@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practical 10.1 - Technical Workshop Ticket Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Animated Background Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="main-wrapper">
+
+        <!-- Top Navigation / Header -->
+        <header class="app-header">
+            <div class="header-brand">
+                <div class="logo-badge">⚡ SIT TECH</div>
+                <div>
+                    <h1>Technical Workshop Ticket Booking</h1>
+                    <p class="subtitle">Practical 10.1 &bull; Student Technical Symposium & Workshop Portal</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <!-- Session Timer Badge (Session Storage) -->
+                <div class="session-pill" id="sessionPill" title="Session storage ticket hold timer">
+                    <span class="pulse-dot"></span>
+                    <span>Session Hold: <strong id="sessionTimer">10:00</strong></span>
+                </div>
+                <!-- Theme Toggle Button (Local Storage) -->
+                <button class="btn btn-outline btn-sm" id="themeToggleBtn" onclick="toggleTheme()">
+                    🌙 Dark Mode
+                </button>
+            </div>
+        </header>
+
+        <!-- Concept Navigation Breadcrumb -->
+        <div class="concept-tags-bar">
+            <span class="tag-label">Concepts Implemented:</span>
+            <span class="concept-tag">Event Handling (Focus/Blur/Change/Input/Mouse)</span>
+            <span class="concept-tag">localStorage & sessionStorage</span>
+            <span class="concept-tag">Array Methods (push, map, filter, reduce, splice)</span>
+            <span class="concept-tag">RegEx & String Methods</span>
+            <span class="concept-tag">DOM Traversal & Manipulation</span>
+            <span class="concept-tag">console.table & console.time</span>
+        </div>
+
+        <!-- Grid Layout: Left Column = Form & Billing, Right Column = Live Monitors & Passes -->
+        <div class="content-grid">
+
+            <!-- LEFT COLUMN: BOOKING FORM -->
+            <div class="card form-card">
+                <div class="card-header">
+                    <h2>🎟️ Student Workshop Registration Form</h2>
+                    <span class="badge badge-primary">Form Validation & Dynamic Calculation</span>
+                </div>
+
+                <form id="workshopForm" novalidate>
+
+                    <!-- SECTION 1: STUDENT CREDENTIALS -->
+                    <div class="form-section-title">
+                        <span>1</span> Personal & Academic Information
+                    </div>
+
+                    <div class="form-row">
+                        <!-- First Name -->
+                        <div class="form-group">
+                            <label for="firstname">First Name <span class="required">*</span></label>
+                            <input type="text" id="firstname" placeholder="e.g. Vedant" autocomplete="off">
+                            <span class="error-msg" id="firstnameError"></span>
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="form-group">
+                            <label for="lastname">Last Name <span class="required">*</span></label>
+                            <input type="text" id="lastname" placeholder="e.g. Nawghare" autocomplete="off">
+                            <span class="error-msg" id="lastnameError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Student PRN / Roll No -->
+                        <div class="form-group">
+                            <label for="studentPrn">PRN / Roll Number <span class="required">*</span></label>
+                            <input type="text" id="studentPrn" placeholder="11 digits (e.g. 24070521047)" maxlength="11" autocomplete="off">
+                            <span class="error-msg" id="studentPrnError"></span>
+                        </div>
+
+                        <!-- College / Institute Name -->
+                        <div class="form-group">
+                            <label for="collegeName">College / University <span class="required">*</span></label>
+                            <input type="text" id="collegeName" placeholder="e.g. SIT Nagpur" autocomplete="off">
+                            <span class="error-msg" id="collegeNameError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Department / Branch -->
+                        <div class="form-group">
+                            <label for="department">Department / Branch <span class="required">*</span></label>
+                            <select id="department">
+                                <option value="">-- Select Branch --</option>
+                                <option value="CSE">Computer Science & Engineering</option>
+                                <option value="AI_DS">Artificial Intelligence & Data Science</option>
+                                <option value="IT">Information Technology</option>
+                                <option value="ECE">Electronics & Communication</option>
+                                <option value="MECH">Mechanical Engineering</option>
+                            </select>
+                            <span class="error-msg" id="departmentError"></span>
+                        </div>
+
+                        <!-- Academic Year -->
+                        <div class="form-group">
+                            <label for="academicYear">Academic Year <span class="required">*</span></label>
+                            <select id="academicYear">
+                                <option value="">-- Select Year --</option>
+                                <option value="1st Year">1st Year (Freshman)</option>
+                                <option value="2nd Year">2nd Year (Sophomore)</option>
+                                <option value="3rd Year">3rd Year (Junior)</option>
+                                <option value="4th Year">4th Year (Senior)</option>
+                            </select>
+                            <span class="error-msg" id="academicYearError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="studentEmail">Student Email <span class="required">*</span></label>
+                            <input type="email" id="studentEmail" placeholder="student@sitnagpur.edu.in" autocomplete="off">
+                            <span class="error-msg" id="studentEmailError"></span>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="form-group">
+                            <label for="studentPhone">Mobile Number (10 digits) <span class="required">*</span></label>
+                            <input type="tel" id="studentPhone" placeholder="10-digit mobile number" maxlength="10" autocomplete="off">
+                            <span class="error-msg" id="studentPhoneError"></span>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2: WORKSHOP SELECTION -->
+                    <div class="form-section-title">
+                        <span>2</span> Workshop Topic & Pass Selection
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Workshop Track -->
+                        <div class="form-group">
+                            <label for="workshopTrack">Select Technical Workshop Track <span class="required">*</span></label>
+                            <select id="workshopTrack">
+                                <option value="">-- Select Workshop Track --</option>
+                                <option value="Full-Stack Web Dev (MERN Stack)" data-baseprice="399">Full-Stack Web Dev (MERN Stack) - ₹399</option>
+                                <option value="Generative AI & LLM Agents" data-baseprice="499">Generative AI & LLM Agents Bootcamp - ₹499</option>
+                                <option value="Cloud Computing & AWS DevOps" data-baseprice="449">Cloud Computing & AWS DevOps - ₹449</option>
+                                <option value="Cybersecurity & Ethical Hacking" data-baseprice="429">Cybersecurity & Ethical Hacking - ₹429</option>
+                                <option value="Data Science & Machine Learning" data-baseprice="399">Data Science & Machine Learning with Python - ₹399</option>
+                            </select>
+                            <span class="error-msg" id="workshopTrackError"></span>
+                        </div>
+
+                        <!-- Ticket Pass Tier -->
+                        <div class="form-group">
+                            <label for="passTier">Ticket Tier <span class="required">*</span></label>
+                            <select id="passTier">
+                                <option value="standard" data-multiplier="1">Standard Student Pass (Certificate + Access)</option>
+                                <option value="pro" data-multiplier="1.3">Pro Pass (+ Workshop Kit + Source Code) (+30%)</option>
+                                <option value="vip" data-multiplier="1.7">VIP Masterclass Pass (+ 1-on-1 Mentorship + Dinner) (+70%)</option>
+                            </select>
+                            <span class="error-msg" id="passTierError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Preferred Batch -->
+                        <div class="form-group">
+                            <label for="batchTime">Workshop Batch & Timing <span class="required">*</span></label>
+                            <select id="batchTime">
+                                <option value="">-- Select Batch Timing --</option>
+                                <option value="Morning Batch (9:00 AM - 1:00 PM)">Morning Batch (9:00 AM - 1:00 PM)</option>
+                                <option value="Afternoon Batch (2:00 PM - 6:00 PM)">Afternoon Batch (2:00 PM - 6:00 PM)</option>
+                                <option value="Full Day Weekend Intensive (9:00 AM - 5:00 PM)">Full Day Weekend Intensive (9:00 AM - 5:00 PM)</option>
+                            </select>
+                            <span class="error-msg" id="batchTimeError"></span>
+                        </div>
+
+                        <!-- Number of Attendees / Tickets -->
+                        <div class="form-group">
+                            <label for="ticketQuantity">Number of Tickets (Max 5) <span class="required">*</span></label>
+                            <input type="number" id="ticketQuantity" min="1" max="5" value="1">
+                            <span class="error-msg" id="ticketQuantityError"></span>
+                        </div>
+                    </div>
+
+                    <!-- Workshop Mode & Add-ons -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Mode of Attendance</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="attendanceMode" value="Offline (Campus Lab)" checked>
+                                    Offline (Campus Lab)
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="attendanceMode" value="Online (Live Zoom Stream)">
+                                    Online (Live Zoom)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Student Membership / Society</label>
+                            <select id="membershipType">
+                                <option value="none">Regular Student (No discount)</option>
+                                <option value="ieee">IEEE / ACM Student Member (15% off)</option>
+                                <option value="sit_student">SIT Nagpur Enrolled Student (20% off)</option>
+                                <option value="core_team">Technical Club Coordinator (30% off)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Laptop & Checkboxes -->
+                    <div class="checkbox-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="bringLaptop" checked>
+                            I will bring my personal laptop with required development software installed
+                        </label>
+                    </div>
+
+                    <!-- SECTION 3: PROMO CODE & PAYMENT -->
+                    <div class="form-section-title">
+                        <span>3</span> Discounts, Promo Code & Payment
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Promo Code -->
+                        <div class="form-group">
+                            <label for="promoCode">Promo Coupon Code</label>
+                            <div class="input-with-btn">
+                                <input type="text" id="promoCode" placeholder="e.g. SIT50, TECH100, SAVE20" autocomplete="off">
+                                <button type="button" class="btn btn-secondary btn-sm" id="applyPromoBtn" onclick="applyPromo()">Apply</button>
+                            </div>
+                            <span class="info-hint" id="promoStatus">Available: <code>SIT50</code> (₹50 off), <code>TECH100</code> (₹100 off on ₹800+), <code>SAVE20</code> (20% off)</span>
+                        </div>
+
+                        <!-- Payment Mode -->
+                        <div class="form-group">
+                            <label>Payment Method <span class="required">*</span></label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="paymentMethod" value="UPI" checked onchange="togglePaymentFields()">
+                                    UPI (Instant)
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="paymentMethod" value="Card" onchange="togglePaymentFields()">
+                                    Debit / Credit Card
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="paymentMethod" value="Desk" onchange="togglePaymentFields()">
+                                    Cash at Desk
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conditional UPI Options (Practical 2 concept) -->
+                    <div id="upiBox" class="conditional-box">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="upiApp">Select UPI App</label>
+                                <select id="upiApp" onchange="toggleUpiIdField()">
+                                    <option value="Google Pay">Google Pay</option>
+                                    <option value="PhonePe">PhonePe</option>
+                                    <option value="Paytm">Paytm</option>
+                                    <option value="other">Other UPI ID</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="customUpiGroup" style="display: none;">
+                                <label for="customUpiId">Enter UPI VPA / ID</label>
+                                <input type="text" id="customUpiId" placeholder="username@okhdfcbank">
+                                <span class="error-msg" id="customUpiIdError"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms & Conditions -->
+                    <div class="checkbox-row" style="margin-top: 15px;">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="termsAgreement">
+                            I accept the Workshop Code of Conduct, attendance requirements, and refund policy <span class="required">*</span>
+                        </label>
+                        <span class="error-msg" id="termsError"></span>
+                    </div>
+
+                    <!-- Form Action Buttons -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            🎟️ Confirm & Book Ticket
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="saveDraftBtn" onclick="saveDraftToLocalStorage()">
+                            💾 Save Draft (localStorage)
+                        </button>
+                        <button type="reset" class="btn btn-outline" id="resetBtn">
+                            🔄 Reset Form
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- RIGHT COLUMN: PRICE BREAKDOWN, STORAGE INSPECTOR & LIVE CONSOLE -->
+            <div class="side-column">
+
+                <!-- 1. LIVE DYNAMIC BILLING SUMMARY (Practical 2 & Practical 5) -->
+                <div class="card billing-card">
+                    <div class="card-header">
+                        <h3>💰 Live Fee Breakdown</h3>
+                        <span class="badge badge-accent" id="billingBadge">Auto Calculating</span>
+                    </div>
+
+                    <div class="billing-details">
+                        <div class="bill-row">
+                            <span>Selected Track:</span>
+                            <strong id="billTrackName">None selected</strong>
+                        </div>
+                        <div class="bill-row">
+                            <span>Base Fee &times; Quantity:</span>
+                            <span id="billBaseRate">₹0.00</span>
+                        </div>
+                        <div class="bill-row">
+                            <span>Tier Multiplier:</span>
+                            <span id="billTier">Standard (1.0x)</span>
+                        </div>
+                        <div class="bill-row">
+                            <span>Membership Discount:</span>
+                            <span class="text-green" id="billMemberDiscount">- ₹0.00</span>
+                        </div>
+                        <div class="bill-row">
+                            <span>Promo Discount:</span>
+                            <span class="text-green" id="billPromoDiscount">- ₹0.00</span>
+                        </div>
+                        <div class="bill-row">
+                            <span>GST (18%):</span>
+                            <span id="billGst">₹0.00</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="bill-row bill-total">
+                            <span>Final Payable Amount:</span>
+                            <strong class="total-amount" id="billFinalAmount">₹0.00</strong>
+                        </div>
+                    </div>
+
+                    <div class="free-perk-note" id="freePerkNote">
+                        💡 Tip: Book 2 or more tickets to receive a complimentary Workshop Certification Kit!
+                    </div>
+                </div>
+
+                <!-- 2. STORAGE CONTROLS & DUAL INSPECTOR (Practical 9 concept) -->
+                <div class="card storage-card">
+                    <div class="card-header">
+                        <h3>📦 Storage Manager</h3>
+                        <span class="badge badge-info">localStorage vs sessionStorage</span>
+                    </div>
+
+                    <div class="storage-dual-grid">
+                        <!-- Local Storage Box -->
+                        <div class="storage-mini-card">
+                            <div class="storage-header">
+                                <strong>📂 LocalStorage</strong>
+                                <span class="badge badge-persistent">Persistent</span>
+                            </div>
+                            <p class="storage-desc">Saves all confirmed workshop bookings & dark mode across refreshes.</p>
+                            <div class="storage-viewer" id="localDataPreview">
+                                <span class="placeholder-text">(No bookings in localStorage)</span>
+                            </div>
+                            <div class="storage-actions-row">
+                                <button class="btn btn-outline btn-xs" onclick="loadBookingsFromStorage()">📥 Reload Data</button>
+                                <button class="btn btn-danger btn-xs" onclick="clearLocalBookings()">🗑️ Clear</button>
+                            </div>
+                        </div>
+
+                        <!-- Session Storage Box -->
+                        <div class="storage-mini-card">
+                            <div class="storage-header">
+                                <strong>⏱️ SessionStorage</strong>
+                                <span class="badge badge-session">Temporary</span>
+                            </div>
+                            <p class="storage-desc">Holds live session token & countdown timer. Empties on tab close.</p>
+                            <div class="storage-viewer" id="sessionDataPreview">
+                                <span class="placeholder-text">(Session active)</span>
+                            </div>
+                            <div class="storage-actions-row">
+                                <button class="btn btn-outline btn-xs" onclick="refreshSessionPreview()">🔍 Inspect</button>
+                                <button class="btn btn-secondary btn-xs" onclick="resetSessionTimer()">⏱️ Reset Timer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. LIVE EVENT STREAM CONSOLE (Practical 7 concept) -->
+                <div class="card console-card">
+                    <div class="card-header">
+                        <h3>📡 Live Event Stream Monitor</h3>
+                        <div style="display: flex; gap: 8px;">
+                            <span class="badge badge-success" id="eventBadge">Listening...</span>
+                            <button class="btn btn-outline btn-xs" onclick="clearEventConsole()">Clear</button>
+                        </div>
+                    </div>
+                    <p class="console-subtitle">Tracks focus, blur, input, change, mouseover, mouseout, submit, & reset events in real-time.</p>
+                    <div class="console-box" id="eventStreamBox">
+                        <div class="console-entry system-msg">[System] Event listener attached. Ready to stream...</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div> <!-- End of content-grid -->
+
+        <!-- SECTION: REGISTERED STUDENTS TABLE & ACTIONS (Practicals 2, 5, 7, 8) -->
+        <div class="card table-card">
+            <div class="card-header table-header-flex">
+                <div>
+                    <h2>📋 Registered Workshop Participants</h2>
+                    <p class="subtitle">Dynamic DOM records table with array operations & filtering</p>
+                </div>
+                <!-- Record Count Badge -->
+                <div class="records-summary">
+                    <span class="badge badge-primary" id="totalRecordsBadge">Total Bookings: 0</span>
+                    <span class="badge badge-accent" id="totalRevenueBadge">Total Collected: ₹0</span>
+                </div>
+            </div>
+
+            <!-- SEARCH & FILTER TOOLBAR (Practical 8.2 concept) -->
+            <div class="filter-toolbar">
+                <div class="search-input-group">
+                    <input type="text" id="searchInput" placeholder="🔍 Search by Student Name, PRN, or Email..." oninput="filterBookings()">
+                    <span class="error-msg" id="searchError"></span>
+                </div>
+                <div class="filter-select-group">
+                    <select id="filterTrack" onchange="filterBookings()">
+                        <option value="all">All Workshop Tracks</option>
+                        <option value="Full-Stack Web Dev (MERN Stack)">Full-Stack Web Dev</option>
+                        <option value="Generative AI & LLM Agents">Generative AI & LLMs</option>
+                        <option value="Cloud Computing & AWS DevOps">Cloud & AWS DevOps</option>
+                        <option value="Cybersecurity & Ethical Hacking">Cybersecurity</option>
+                        <option value="Data Science & Machine Learning">Data Science & ML</option>
+                    </select>
+                </div>
+                <button class="btn btn-outline btn-sm" onclick="clearFilters()">Reset Filters</button>
+                <button class="btn btn-secondary btn-sm" onclick="exportConsoleAnalytics()">📊 Console Analytics</button>
+            </div>
+
+            <!-- Data Table -->
+            <div class="table-responsive">
+                <table class="data-table" id="bookingsTable">
+                    <thead>
+                        <tr>
+                            <th># Booking ID</th>
+                            <th>Student Details</th>
+                            <th>College & Branch</th>
+                            <th>Workshop Track & Batch</th>
+                            <th>Pass / Mode</th>
+                            <th>Tickets</th>
+                            <th>Paid Amount</th>
+                            <th>Actions (DOM)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTableBody">
+                        <tr id="emptyTableRow">
+                            <td colspan="8" class="text-center empty-state">
+                                No workshop tickets booked yet. Complete the registration form above to issue your pass!
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- PRINTABLE TICKET PASS MODAL / RECEIPT (Practical 2 concept) -->
+        <div id="ticketModal" class="modal-backdrop" style="display: none;">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3>🎟️ Official Workshop Admission Pass</h3>
+                    <button class="close-btn" onclick="closeTicketModal()">&times;</button>
+                </div>
+
+                <div class="ticket-printable-content" id="printableTicket">
+                    <!-- Dynamic Ticket Injected Here -->
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary" onclick="printTicketPass()">🖨️ Print Ticket Pass</button>
+                    <button class="btn btn-outline" onclick="closeTicketModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Practical 10.1 &bull; Technical Workshop Ticket Booking Web Application</p>
+            <p class="muted">Symbiosis Institute of Technology (SIT), Nagpur &bull; JavaScript Case Study &bull; Vedant Nawghare (PRN: 24070521047)</p>
+        </footer>
+
+    </div>
+
+    <!-- Script File -->
+    <script src="script.js"></script>
+</body>
+</html>

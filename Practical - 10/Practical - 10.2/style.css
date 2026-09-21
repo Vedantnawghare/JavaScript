@@ -1,0 +1,983 @@
+/* ==========================================================================
+   PRACTICAL 10.2 - ONLINE MUSIC CONCERT REGISTRATION STYLESHEET
+   ========================================================================== */
+
+:root {
+    --primary: #ec4899;       /* Neon Pink */
+    --primary-hover: #db2777;
+    --primary-glow: rgba(236, 72, 153, 0.35);
+    --secondary: #06b6d4;     /* Electric Cyan */
+    --secondary-hover: #0891b2;
+    --accent: #10b981;        /* Emerald Green */
+    --accent-glow: rgba(16, 185, 129, 0.35);
+    --danger: #f43f5e;        /* Rose Red */
+    --danger-hover: #e11d48;
+    --purple: #8b5cf6;
+
+    --bg: #090b14;
+    --card-bg: rgba(18, 22, 38, 0.85);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --input-bg: rgba(10, 13, 24, 0.9);
+    --input-border: rgba(148, 163, 184, 0.2);
+    --input-focus: #ec4899;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="light"] {
+    --bg: #f3f4f8;
+    --card-bg: rgba(255, 255, 255, 0.92);
+    --card-border: #e2e8f0;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --input-bg: #ffffff;
+    --input-border: #cbd5e1;
+    --input-focus: #ec4899;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', 'Space Grotesk', system-ui, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px 16px;
+    line-height: 1.5;
+    position: relative;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ambient Neon Glows */
+.neon-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.3;
+}
+.glow-magenta {
+    width: 450px;
+    height: 450px;
+    background: #ec4899;
+    top: -50px;
+    left: -100px;
+}
+.glow-cyan {
+    width: 500px;
+    height: 500px;
+    background: #06b6d4;
+    top: 25%;
+    right: -150px;
+}
+.glow-purple {
+    width: 400px;
+    height: 400px;
+    background: #8b5cf6;
+    bottom: 50px;
+    left: 20%;
+}
+
+.app-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.concert-header {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(20px);
+    border-radius: var(--radius-lg);
+    padding: 20px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+.brand-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.live-pulse-badge {
+    background: linear-gradient(135deg, #f43f5e, #ec4899);
+    color: white;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 8px 14px;
+    border-radius: var(--radius-md);
+    letter-spacing: 1px;
+    box-shadow: 0 0 15px var(--primary-glow);
+    animation: neonBlink 2.5s infinite alternate;
+}
+
+@keyframes neonBlink {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.2) drop-shadow(0 0 10px #ec4899); }
+}
+
+.brand-group h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-group .tagline {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.header-tools {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.seat-lock-badge {
+    background: rgba(236, 72, 153, 0.12);
+    color: #f472b6;
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    padding: 7px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Fira Code', monospace;
+}
+
+.pulse-indicator {
+    width: 8px;
+    height: 8px;
+    background-color: #ec4899;
+    border-radius: 50%;
+    animation: pulseLock 1.2s infinite;
+}
+
+@keyframes pulseLock {
+    0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
+    70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(236, 72, 153, 0); }
+    100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
+}
+
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(236, 72, 153, 0.15);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Concept Bar */
+.concept-banner {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 10px 18px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 12px;
+}
+
+.concept-title {
+    font-weight: 700;
+    color: var(--secondary);
+    margin-right: 4px;
+}
+
+.pill {
+    background: rgba(6, 182, 212, 0.12);
+    color: var(--secondary);
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   CONCERT GRID
+   ========================================================================== */
+.concert-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 960px) {
+    .concert-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Cards */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(16px);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transition: var(--transition);
+}
+
+.card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 12px;
+}
+
+.card-head h2, .card-head h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.section-badge {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 20px 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.step-num {
+    background: linear-gradient(135deg, var(--primary), var(--purple));
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   FORM ELEMENTS
+   ========================================================================== */
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+@media (max-width: 600px) {
+    .row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.field-col {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.req {
+    color: var(--danger);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    color: var(--text);
+    font-family: inherit;
+    outline: none;
+    transition: var(--transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+/* Validation states */
+input.invalid,
+select.invalid {
+    border-color: var(--danger) !important;
+    background-color: rgba(244, 63, 94, 0.05) !important;
+}
+
+input.valid,
+select.valid {
+    border-color: var(--accent) !important;
+}
+
+.err {
+    color: var(--danger);
+    font-size: 0.75rem;
+    margin-top: 4px;
+    min-height: 16px;
+    font-weight: 500;
+}
+
+.age-badge {
+    font-size: 0.75rem;
+    color: var(--secondary);
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.promo-hint {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.input-btn-combo {
+    display: flex;
+    gap: 8px;
+}
+
+.input-btn-combo input {
+    flex: 1;
+}
+
+/* Addons Selection Cards */
+.addons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+@media (max-width: 600px) {
+    .addons-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.addon-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.addon-card:hover {
+    border-color: var(--secondary);
+    background: rgba(6, 182, 212, 0.05);
+}
+
+.addon-card input[type="checkbox"] {
+    margin-top: 3px;
+    accent-color: var(--primary);
+    cursor: pointer;
+    transform: scale(1.15);
+}
+
+.addon-text strong {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text);
+}
+
+.addon-text span {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+}
+
+/* Radio chips */
+.radio-row {
+    display: flex;
+    gap: 10px;
+    padding-top: 6px;
+    flex-wrap: wrap;
+}
+
+.radio-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.84rem;
+    cursor: pointer;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.radio-chip input[type="radio"] {
+    accent-color: var(--primary);
+}
+
+.radio-chip:hover {
+    border-color: var(--primary);
+}
+
+/* Conditional UPI */
+.upi-box {
+    background: rgba(236, 72, 153, 0.05);
+    border: 1px dashed rgba(236, 72, 153, 0.35);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    margin: 10px 0 16px 0;
+}
+
+/* Terms */
+.terms-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 0;
+}
+
+.terms-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.84rem;
+    cursor: pointer;
+}
+
+.terms-label input {
+    margin-top: 3px;
+    accent-color: var(--primary);
+}
+
+/* Buttons */
+.form-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--card-border);
+}
+
+.btn {
+    padding: 10px 22px;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ec4899, #8b5cf6);
+    color: white;
+    box-shadow: 0 4px 15px var(--primary-glow);
+}
+.btn-primary:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: white;
+}
+.btn-secondary:hover {
+    background: var(--secondary-hover);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--input-border);
+}
+.btn-outline:hover {
+    background: rgba(236, 72, 153, 0.1);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+.btn-danger:hover {
+    background: var(--danger-hover);
+}
+
+.btn-sm {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+}
+
+.btn-xs {
+    padding: 4px 8px;
+    font-size: 0.74rem;
+    border-radius: 6px;
+}
+
+/* ==========================================================================
+   BILLING BREAKDOWN CARD
+   ========================================================================== */
+.bill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bill-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+}
+
+.bill-grand-total {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--primary);
+    padding-top: 6px;
+}
+
+.neon-green {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.bill-line {
+    border: none;
+    border-top: 1px dashed var(--card-border);
+    margin: 4px 0;
+}
+
+.perk-box {
+    margin-top: 14px;
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    color: var(--secondary);
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   STORAGE INSPECTION (PRACTICAL 9)
+   ========================================================================== */
+.storage-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 600px) {
+    .storage-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+.storage-box {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.storage-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.storage-caption {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.storage-content-display {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    padding: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.72rem;
+    color: var(--text);
+    min-height: 70px;
+    max-height: 110px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.dim-text {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.storage-btn-group {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+/* ==========================================================================
+   LIVE EVENT FEED (PRACTICAL 7)
+   ========================================================================== */
+.console-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.event-feed {
+    background: #04060d;
+    color: #38bdf8;
+    border: 1px solid #1e293b;
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.74rem;
+    height: 170px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse; /* Newest on top */
+    gap: 5px;
+}
+
+.feed-entry {
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.feed-entry .time {
+    color: #64748b;
+}
+
+.feed-entry.sys-log {
+    color: #c084fc;
+}
+
+.feed-entry.ok-log {
+    color: #4ade80;
+}
+
+.feed-entry.fail-log {
+    color: #f87171;
+}
+
+/* ==========================================================================
+   TABLE SECTION & FILTERS (PRACTICALS 2, 5, 7, 8)
+   ========================================================================== */
+.table-head-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.count-badges {
+    display: flex;
+    gap: 10px;
+}
+
+.search-bar-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.search-input-wrap {
+    flex: 1;
+    min-width: 220px;
+}
+
+.search-input-wrap input {
+    width: 100%;
+}
+
+.table-container {
+    overflow-x: auto;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+}
+
+.concert-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    text-align: left;
+}
+
+.concert-table th {
+    background: rgba(236, 72, 153, 0.08);
+    color: var(--primary);
+    font-weight: 700;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--card-border);
+    white-space: nowrap;
+}
+
+.concert-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--card-border);
+    vertical-align: middle;
+}
+
+.concert-table tbody tr:hover {
+    background-color: rgba(236, 72, 153, 0.05);
+}
+
+.empty-state-cell {
+    padding: 30px !important;
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.table-btns {
+    display: flex;
+    gap: 6px;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+}
+.badge-neon { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
+.badge-accent { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+.badge-info { background: rgba(6, 182, 212, 0.2); color: #38bdf8; }
+.badge-success { background: #dcfce7; color: #15803d; }
+.badge-persistent { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+.badge-session { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+/* ==========================================================================
+   PRINTABLE VIP CONCERT PASS (PRACTICAL 2)
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+.modal-box {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    width: 100%;
+    max-width: 600px;
+    padding: 24px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.modal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.modal-x {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.vip-pass {
+    background: linear-gradient(135deg, #180828, #3b0764, #1e1b4b);
+    color: white;
+    border-radius: var(--radius-md);
+    padding: 24px;
+    border: 2px dashed #ec4899;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.vip-pass-head {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+}
+
+.vip-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #f472b6;
+}
+
+.vip-id {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+}
+
+.vip-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    font-size: 0.85rem;
+}
+
+.vip-cell span {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+}
+
+.vip-cell strong {
+    font-size: 0.95rem;
+    color: #ffffff;
+}
+
+.vip-barcode {
+    margin-top: 18px;
+    text-align: center;
+    letter-spacing: 6px;
+    font-family: 'Fira Code', monospace;
+    font-size: 1.3rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.modal-bottom {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    border-top: 1px solid var(--card-border);
+    padding-top: 14px;
+}
+
+/* Footer */
+.concert-footer {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    padding: 20px 0;
+}
+
+/* Print Specific Media Query */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #concertPassModal, #concertPassModal * {
+        visibility: visible;
+    }
+    #concertPassModal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: none;
+        padding: 0;
+    }
+    .modal-box {
+        border: none;
+        box-shadow: none;
+        width: 100%;
+        max-width: 100%;
+    }
+    .modal-top .modal-x, .modal-bottom {
+        display: none !important;
+    }
+}

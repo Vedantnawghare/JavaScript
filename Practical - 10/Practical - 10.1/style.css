@@ -1,0 +1,891 @@
+/* ==========================================================================
+   PRACTICAL 10.1 - TECHNICAL WORKSHOP TICKET BOOKING STYLESHEET
+   ========================================================================== */
+
+:root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --primary-light: #eef2ff;
+    --secondary: #0891b2;
+    --secondary-hover: #0e7490;
+    --accent: #10b981;
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --warning: #f59e0b;
+    
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --input-bg: #fdfdfd;
+    --input-border: #cbd5e1;
+    --input-focus: #6366f1;
+    
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    --shadow-lg: 0 20px 30px -10px rgba(0, 0, 0, 0.1);
+    
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --primary-light: rgba(99, 102, 241, 0.15);
+    --secondary: #06b6d4;
+    --secondary-hover: #0891b2;
+    --accent: #10b981;
+    --danger: #f87171;
+    --danger-hover: #ef4444;
+    
+    --bg: #0b0f19;
+    --card-bg: #131b2e;
+    --card-border: #1e293b;
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --input-bg: #0f172a;
+    --input-border: #334155;
+    --input-focus: #818cf8;
+    
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 20px 30px -10px rgba(0, 0, 0, 0.6);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px 16px;
+    line-height: 1.5;
+    position: relative;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Background Animated Blobs */
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.35;
+}
+.blob-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #6366f1 0%, rgba(99, 102, 241, 0) 70%);
+    top: 0;
+    left: -100px;
+}
+.blob-2 {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
+    top: 30%;
+    right: -150px;
+}
+.blob-3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #10b981 0%, rgba(16, 185, 129, 0) 70%);
+    bottom: 50px;
+    left: 20%;
+}
+
+.main-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ==========================================================================
+   HEADER & NAVBAR
+   ========================================================================== */
+.app-header {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 18px 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo-badge {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    letter-spacing: 0.5px;
+}
+
+.header-brand h1 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-brand .subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.session-pill {
+    background: var(--primary-light);
+    color: var(--primary);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    padding: 7px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Fira Code', monospace;
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--danger);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+    100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Concept Bar */
+.concept-tags-bar {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 10px 16px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.tag-label {
+    font-weight: 700;
+    color: var(--primary);
+    margin-right: 4px;
+}
+
+.concept-tag {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   GRID LAYOUT
+   ========================================================================== */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 960px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.side-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ==========================================================================
+   CARDS
+   ========================================================================== */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 12px;
+}
+
+.card-header h2, .card-header h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.form-section-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 20px 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-section-title span {
+    background: var(--primary);
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   FORM CONTROLS
+   ========================================================================== */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.required {
+    color: var(--danger);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="password"],
+select,
+textarea {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    color: var(--text);
+    font-family: inherit;
+    outline: none;
+    transition: var(--transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    background: var(--card-bg);
+}
+
+/* Validation states */
+input.invalid,
+select.invalid {
+    border-color: var(--danger) !important;
+    background-color: rgba(239, 68, 68, 0.04) !important;
+}
+
+input.valid,
+select.valid {
+    border-color: var(--accent) !important;
+}
+
+.error-msg {
+    color: var(--danger);
+    font-size: 0.75rem;
+    margin-top: 4px;
+    min-height: 16px;
+    font-weight: 500;
+}
+
+.info-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.input-with-btn {
+    display: flex;
+    gap: 8px;
+}
+
+.input-with-btn input {
+    flex: 1;
+}
+
+/* Radio and Checkboxes */
+.radio-group {
+    display: flex;
+    gap: 16px;
+    padding-top: 6px;
+    flex-wrap: wrap;
+}
+
+.radio-label, .checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-row {
+    margin: 8px 0;
+}
+
+.conditional-box {
+    background: var(--primary-light);
+    border: 1px dashed rgba(99, 102, 241, 0.4);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    margin-top: 10px;
+    margin-bottom: 14px;
+}
+
+/* Buttons */
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--card-border);
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    color: white;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+.btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: white;
+}
+.btn-secondary:hover {
+    background: var(--secondary-hover);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--input-border);
+}
+.btn-outline:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+.btn-danger:hover {
+    background: var(--danger-hover);
+}
+
+.btn-sm {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+}
+
+.btn-xs {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+}
+
+/* ==========================================================================
+   BILLING BREAKDOWN CARD
+   ========================================================================== */
+.billing-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bill-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+}
+
+.bill-total {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--primary);
+    padding-top: 6px;
+}
+
+.text-green {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.divider {
+    border: none;
+    border-top: 1px dashed var(--card-border);
+    margin: 4px 0;
+}
+
+.free-perk-note {
+    margin-top: 14px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: var(--accent);
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   STORAGE DUAL INSPECTOR (PRACTICAL 9 CONCEPT)
+   ========================================================================== */
+.storage-dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 600px) {
+    .storage-dual-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.storage-mini-card {
+    background: var(--bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.storage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.storage-desc {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.storage-viewer {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    padding: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.72rem;
+    color: var(--text);
+    min-height: 70px;
+    max-height: 110px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.placeholder-text {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.storage-actions-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+/* ==========================================================================
+   LIVE CONSOLE MONITOR (PRACTICAL 7 CONCEPT)
+   ========================================================================== */
+.console-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.console-box {
+    background: #090d16;
+    color: #38bdf8;
+    border: 1px solid #1e293b;
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.74rem;
+    height: 170px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse; /* Newest on top */
+    gap: 5px;
+}
+
+.console-entry {
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.console-entry .timestamp {
+    color: #94a3b8;
+}
+
+.console-entry.system-msg {
+    color: #a855f7;
+}
+
+.console-entry.success-msg {
+    color: #4ade80;
+}
+
+.console-entry.error-msg-log {
+    color: #f87171;
+}
+
+/* ==========================================================================
+   DATA TABLE & FILTERS (PRACTICALS 2, 5, 7, 8)
+   ========================================================================== */
+.table-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.records-summary {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-toolbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.search-input-group {
+    flex: 1;
+    min-width: 220px;
+}
+
+.search-input-group input {
+    width: 100%;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    text-align: left;
+}
+
+.data-table th {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 700;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--card-border);
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--card-border);
+    vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+    background-color: rgba(99, 102, 241, 0.04);
+}
+
+.empty-state {
+    padding: 30px !important;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.action-btn-group {
+    display: flex;
+    gap: 6px;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+}
+.badge-primary { background: var(--primary-light); color: var(--primary); }
+.badge-accent { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
+.badge-info { background: #e0f2fe; color: #0284c7; }
+.badge-success { background: #dcfce7; color: #15803d; }
+.badge-persistent { background: #dbeafe; color: #1d4ed8; }
+.badge-session { background: #fef3c7; color: #b45309; }
+
+/* ==========================================================================
+   PRINTABLE MODAL / TICKET (PRACTICAL 2)
+   ========================================================================== */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+.modal-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    width: 100%;
+    max-width: 580px;
+    padding: 24px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.ticket-pass {
+    background: linear-gradient(135deg, #1e1b4b, #312e81);
+    color: white;
+    border-radius: var(--radius-md);
+    padding: 20px;
+    border: 2px dashed #818cf8;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.ticket-pass-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+}
+
+.ticket-pass-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #a5b4fc;
+}
+
+.ticket-pass-id {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: #fbcfe8;
+}
+
+.ticket-pass-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    font-size: 0.85rem;
+}
+
+.ticket-field span {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #cbd5e1;
+    letter-spacing: 0.5px;
+}
+
+.ticket-field strong {
+    font-size: 0.95rem;
+    color: #ffffff;
+}
+
+.ticket-barcode-sim {
+    margin-top: 16px;
+    text-align: center;
+    letter-spacing: 5px;
+    font-family: 'Fira Code', monospace;
+    font-size: 1.2rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    border-top: 1px solid var(--card-border);
+    padding-top: 14px;
+}
+
+/* Footer */
+.app-footer {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    padding: 20px 0;
+}
+
+/* Print Specific Media Query */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #ticketModal, #ticketModal * {
+        visibility: visible;
+    }
+    #ticketModal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: none;
+        padding: 0;
+    }
+    .modal-card {
+        border: none;
+        box-shadow: none;
+        width: 100%;
+        max-width: 100%;
+    }
+    .modal-header .close-btn, .modal-footer {
+        display: none !important;
+    }
+}
