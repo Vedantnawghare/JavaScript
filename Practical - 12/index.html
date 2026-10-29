@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practical 12: AirPulse - Real-Time Air Quality &amp; Climate Radar</title>
+  
+  <!-- External CSS for Beautification, Modern UI & Responsive Layout -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Google Fonts for Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Toast Notification Container for Alerts -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Main Container -->
+  <div class="app-layout">
+    
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="logo-mark">
+          <span class="radar-ping"></span>
+          💨
+        </div>
+        <div>
+          <div class="lab-pill">Practical 12 &bull; Interactive Web Application</div>
+          <h1>AirPulse <span class="badge-live">LIVE RADAR</span></h1>
+          <p class="tagline">Real-Time Global Air Quality, Environmental Health &amp; Climate Intelligence</p>
+        </div>
+      </div>
+
+      <!-- Real-time Radar Controls & Status -->
+      <div class="header-controls">
+        <div class="auto-refresh-widget">
+          <span class="refresh-radar-icon" id="radarSpinner">📡</span>
+          <div class="refresh-meta">
+            <span class="refresh-label">AUTO-SYNC RADAR: <strong id="refreshCountdown">30s</strong></span>
+            <div class="refresh-progress-bar">
+              <div class="refresh-progress-fill" id="radarProgressFill"></div>
+            </div>
+          </div>
+          <label class="switch" title="Toggle 30-Second Auto Refresh">
+            <input type="checkbox" id="autoRefreshToggle" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <button id="manualRefreshBtn" class="btn btn-icon" title="Fetch Latest Data Now">
+          <span class="btn-icon-symbol">🔄</span> Sync Now
+        </button>
+      </div>
+    </header>
+
+    <!-- Search & Quick Selection Bar -->
+    <section class="search-section">
+      <form id="citySearchForm" class="search-form">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="cityInput" 
+            class="search-input" 
+            placeholder="Search any global city (e.g., Delhi, Mumbai, London, Tokyo, New York, Paris)..." 
+            autocomplete="off"
+            required
+          >
+          <button type="button" id="clearSearchBtn" class="clear-search-btn" style="display:none;">&times;</button>
+        </div>
+        <button type="submit" id="searchSubmitBtn" class="btn btn-primary">
+          <span class="btn-text">Inspect Air Quality</span>
+          <span class="btn-spinner" style="display:none;">⏳</span>
+        </button>
+      </form>
+
+      <!-- Quick City Selection Pills -->
+      <div class="quick-chips-wrapper">
+        <span class="quick-chips-label">Popular Hubs:</span>
+        <div class="city-chips" id="quickCityChips">
+          <button class="city-chip" data-city="New Delhi">🇮🇳 New Delhi</button>
+          <button class="city-chip" data-city="Mumbai">🇮🇳 Mumbai</button>
+          <button class="city-chip" data-city="London">🇬🇧 London</button>
+          <button class="city-chip" data-city="Tokyo">🇯🇵 Tokyo</button>
+          <button class="city-chip" data-city="New York">🇺🇸 New York</button>
+          <button class="city-chip" data-city="Dubai">🇦🇪 Dubai</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <main class="content-grid">
+
+      <!-- Left Column: Primary Air Quality & Health Radar -->
+      <section class="main-column">
+
+        <!-- Active City Overview Card -->
+        <article class="card hero-aqi-card" id="heroAqiCard">
+          <div class="card-top-bar">
+            <div>
+              <span class="city-country-badge" id="cardCountryBadge">Loading Region...</span>
+              <h2 class="city-title" id="cardCityName">Fetching Location...</h2>
+              <p class="coords-text" id="cardCoords">Coordinates: --°N, --°E &bull; Elevation: -- m</p>
+            </div>
+            
+            <div class="card-actions">
+              <button id="toggleFavoriteBtn" class="btn btn-fav" title="Save to Favorites (Stored in localStorage)">
+                <span id="favStarIcon">⭐</span> <span id="favBtnLabel">Bookmark</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- AQI Gauge & Score Display -->
+          <div class="aqi-score-container">
+            <div class="aqi-meter-wrapper">
+              <div class="aqi-gauge-circle" id="aqiGaugeCircle">
+                <div class="aqi-score-num" id="aqiScoreValue">--</div>
+                <div class="aqi-score-max">/ 100+ AQI</div>
+              </div>
+            </div>
+
+            <div class="aqi-verdict-wrapper">
+              <div class="aqi-status-pill" id="aqiStatusBadge">CALCULATING...</div>
+              <h3 class="verdict-heading" id="aqiVerdictHeading">Connecting to Air Sensors...</h3>
+              <p class="verdict-description" id="aqiVerdictDesc">Fetching live atmospheric telemetry using jQuery AJAX.</p>
+              
+              <!-- Quick Climate Strip (Weather, Temp, Wind) -->
+              <div class="climate-quick-strip">
+                <div class="climate-stat">
+                  <span class="stat-icon">🌡️</span>
+                  <div>
+                    <div class="stat-value" id="weatherTemp">--°C</div>
+                    <div class="stat-title">Temperature</div>
+                  </div>
+                </div>
+                <div class="climate-stat">
+                  <span class="stat-icon">💨</span>
+                  <div>
+                    <div class="stat-value" id="weatherWind">-- km/h</div>
+                    <div class="stat-title">Wind Speed</div>
+                  </div>
+                </div>
+                <div class="climate-stat">
+                  <span class="stat-icon">☀️</span>
+                  <div>
+                    <div class="stat-value" id="weatherUv">--</div>
+                    <div class="stat-title">UV Index</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Health Action Recommendations (DOM updated by JS) -->
+          <div class="health-advisory-box">
+            <div class="advisory-title">
+              <span>🩺 Personalized Health &amp; Activity Advisory</span>
+              <span class="advisory-source">WHO Standards</span>
+            </div>
+            <div class="advisory-cards-grid" id="advisoryGrid">
+              <!-- Dynamically rendered by JavaScript -->
+            </div>
+          </div>
+        </article>
+
+        <!-- Pollutant Breakdown Matrix -->
+        <article class="card pollutants-card">
+          <div class="section-header">
+            <div>
+              <h3>Atmospheric Pollutant Breakdown</h3>
+              <p class="section-desc">Real-time concentration levels measured against global health thresholds</p>
+            </div>
+            <span class="badge-units">&mu;g/m&sup3; Micrograms per Cubic Meter</span>
+          </div>
+
+          <div class="pollutants-grid" id="pollutantsGrid">
+            <!-- Dynamically populated via jQuery DOM methods -->
+          </div>
+        </article>
+
+      </section>
+
+      <!-- Right Column: Local Storage, History & AJAX Telemetry -->
+      <aside class="sidebar-column">
+
+        <!-- Saved Favorite Locations (Stored in localStorage) -->
+        <div class="card sidebar-card">
+          <div class="sidebar-header">
+            <div class="sidebar-title-group">
+              <span class="sidebar-icon">⭐</span>
+              <div>
+                <h4>Saved Locations</h4>
+                <p class="sidebar-sub">Persistent storage in <code>localStorage</code></p>
+              </div>
+            </div>
+            <span class="count-badge" id="favoritesCount">0</span>
+          </div>
+
+          <div class="favorites-list" id="favoritesList">
+            <!-- Rendered dynamically from localStorage -->
+            <div class="empty-state">No saved cities yet. Click the "Bookmark" button to save locations!</div>
+          </div>
+        </div>
+
+        <!-- Recent Search History (Stored in localStorage) -->
+        <div class="card sidebar-card">
+          <div class="sidebar-header">
+            <div class="sidebar-title-group">
+              <span class="sidebar-icon">🕒</span>
+              <div>
+                <h4>Recent Searches</h4>
+                <p class="sidebar-sub">Logged events and timestamps</p>
+              </div>
+            </div>
+            <button id="clearHistoryBtn" class="btn-link" style="display:none;">Clear All</button>
+          </div>
+
+          <div class="history-list" id="historyList">
+            <!-- Rendered dynamically from localStorage -->
+          </div>
+        </div>
+
+        <!-- AJAX Network Telemetry & Diagnostic Monitor -->
+        <div class="card sidebar-card ajax-telemetry-card">
+          <div class="sidebar-header">
+            <div class="sidebar-title-group">
+              <span class="sidebar-icon">⚡</span>
+              <div>
+                <h4>jQuery AJAX Live Telemetry</h4>
+                <p class="sidebar-sub">Real-time HTTP Request &amp; Response Inspector</p>
+              </div>
+            </div>
+            <span class="status-dot-pulse" id="telemetryStatusDot"></span>
+          </div>
+
+          <div class="telemetry-table">
+            <div class="telemetry-row">
+              <span class="tel-label">Request Type:</span>
+              <span class="tel-val" id="telMethod">jQuery $.ajax (GET)</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="tel-label">HTTP Status:</span>
+              <span class="tel-val status-ok" id="telHttpStatus">200 OK</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="tel-label">Network Latency:</span>
+              <span class="tel-val" id="telLatency">-- ms</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="tel-label">Active API:</span>
+              <span class="tel-val tel-url" id="telEndpoint">Open-Meteo Air Quality</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="tel-label">Cache Storage:</span>
+              <span class="tel-val" id="telCacheStatus">Active &amp; Synced</span>
+            </div>
+          </div>
+
+          <div class="ajax-events-log" id="ajaxEventsLog">
+            <div class="ajax-log-line init">[READY] jQuery 3.7.1 initialized. DOM and Events bound.</div>
+          </div>
+        </div>
+
+      </aside>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>JavaScript Lab Practical 12 &bull; Interactive Real-Time Web App with jQuery, DOM, Events, Storage &amp; AJAX Integration</p>
+    </footer>
+
+  </div>
+
+  <!-- jQuery 3.7.1 CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- External JavaScript Logic File -->
+  <script src="script.js"></script>
+
+</body>
+</html>
