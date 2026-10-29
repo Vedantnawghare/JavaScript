@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practical 11: Dynamic Countdown & Live Class Scheduler</title>
+  <!-- External CSS Stylesheet for all visual design and responsiveness -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Information Banner for Browser Execution Environment -->
+  <div id="envBanner" class="env-banner">
+    <div class="banner-content">
+      <span class="status-indicator live"></span>
+      <span id="envBannerText">ES6 Module Mode Active &bull; JavaScript Timers Running</span>
+    </div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="header-titles">
+        <div class="badge">Practical 11 &bull; JavaScript Lab</div>
+        <h1>Dynamic Countdown &amp; Class Scheduler</h1>
+        <p class="subtitle">Demonstrating JavaScript Timers (<code>setInterval()</code>, <code>setTimeout()</code>) and ES6 Modules (<code>import</code> / <code>export</code>) with real-time updates.</p>
+      </div>
+
+      <!-- Real-time Live Clock Card (Updated every second using setInterval) -->
+      <div class="live-clock-card">
+        <div class="clock-label">
+          <span class="pulse-dot"></span> LIVE SYSTEM TIME
+        </div>
+        <div class="clock-time" id="liveClockDisplay">00:00:00 <span class="clock-period">AM</span></div>
+        <div class="clock-date" id="liveDateDisplay">Loading Date...</div>
+      </div>
+    </header>
+
+    <!-- Notification Toast / Alert Container (Triggered by setTimeout) -->
+    <div id="alertContainer" class="alert-container"></div>
+
+    <!-- Main Dashboard Grid -->
+    <main class="dashboard-grid">
+
+      <!-- Column 1: Live Class Scheduler Section -->
+      <section class="card scheduler-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="card-icon">📚</span>
+            <div>
+              <h2>Live Class Timetable &amp; Tracker</h2>
+              <p class="card-desc">Tracks ongoing and upcoming lectures in real-time</p>
+            </div>
+          </div>
+          <button id="openAddClassModalBtn" class="btn btn-secondary btn-sm">+ Add Lecture</button>
+        </div>
+
+        <!-- Current Ongoing Class Box (Real-time highlighted) -->
+        <div class="status-highlight-box" id="currentClassBox">
+          <div class="status-tag ongoing">
+            <span class="pulse-badge"></span> CURRENT ONGOING LECTURE
+          </div>
+          <h3 id="currentClassName">Detecting active class...</h3>
+          <p id="currentClassDetails" class="details-text">Please wait while the schedule syncs.</p>
+          
+          <!-- Live Lecture Progress Bar -->
+          <div class="progress-container">
+            <div class="progress-labels">
+              <span id="currentClassTimeRange">--:-- - --:--</span>
+              <span id="currentClassRemaining">0 mins remaining</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="classProgressFill" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next Upcoming Class Box -->
+        <div class="status-highlight-box next-box" id="nextClassBox">
+          <div class="status-tag upcoming">
+            <span>⏳</span> NEXT UPCOMING LECTURE
+          </div>
+          <div class="next-flex">
+            <div>
+              <h4 id="nextClassName">Loading next lecture...</h4>
+              <p id="nextClassDetails" class="details-text">Schedule data updating...</p>
+            </div>
+            <div class="next-countdown-badge" id="nextClassCountdown">
+              in -- mins
+            </div>
+          </div>
+        </div>
+
+        <!-- Day Selector for Timetable -->
+        <div class="timetable-nav">
+          <span class="timetable-nav-label">Select Day:</span>
+          <div class="day-pills" id="daySelectorContainer">
+            <button class="day-pill" data-day="1">Mon</button>
+            <button class="day-pill" data-day="2">Tue</button>
+            <button class="day-pill" data-day="3">Wed</button>
+            <button class="day-pill" data-day="4">Thu</button>
+            <button class="day-pill" data-day="5">Fri</button>
+          </div>
+        </div>
+
+        <!-- Timetable Table -->
+        <div class="table-responsive">
+          <table class="timetable" id="timetableTable">
+            <thead>
+              <tr>
+                <th>Time Window</th>
+                <th>Subject Name</th>
+                <th>Faculty</th>
+                <th>Room</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="timetableBody">
+              <!-- Dynamically populated by JavaScript logic -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Column 2: Dynamic Countdowns & Timers Section -->
+      <section class="card timer-card">
+        
+        <!-- Tab Navigation for Countdown Modes -->
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="card-icon">⏱️</span>
+            <div>
+              <h2>Dynamic Event Countdown</h2>
+              <p class="card-desc">Calculates days, hours, minutes, and seconds until target event</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Countdown Component -->
+        <div class="countdown-section">
+          <!-- Target Event Info Display -->
+          <div class="target-info-banner">
+            <div>
+              <div class="target-label">Target Milestone:</div>
+              <div class="target-title" id="displayTargetTitle">Final Semester Lab Examination</div>
+            </div>
+            <div class="target-date-badge" id="displayTargetDate">May 15, 2026 at 10:00 AM</div>
+          </div>
+
+          <!-- Dynamic 4-Block Countdown Timer -->
+          <div class="countdown-display-grid">
+            <div class="countdown-box">
+              <span class="count-number" id="countdownDays">00</span>
+              <span class="count-label">Days</span>
+            </div>
+            <div class="countdown-box">
+              <span class="count-number" id="countdownHours">00</span>
+              <span class="count-label">Hours</span>
+            </div>
+            <div class="countdown-box">
+              <span class="count-number" id="countdownMinutes">00</span>
+              <span class="count-label">Minutes</span>
+            </div>
+            <div class="countdown-box">
+              <span class="count-number" id="countdownSeconds">00</span>
+              <span class="count-label">Seconds</span>
+            </div>
+          </div>
+
+          <!-- Countdown Control Form -->
+          <div class="countdown-controls-panel">
+            <div class="form-row">
+              <div class="form-group flex-2">
+                <label for="eventTitleInput">Event Title:</label>
+                <input type="text" id="eventTitleInput" class="form-control" placeholder="e.g., Final Semester Exam">
+              </div>
+              <div class="form-group flex-3">
+                <label for="eventDateInput">Target Date &amp; Time:</label>
+                <input type="datetime-local" id="eventDateInput" class="form-control">
+              </div>
+            </div>
+
+            <div class="button-group">
+              <button id="setCountdownBtn" class="btn btn-primary">Start New Countdown</button>
+              <button id="snoozeAlertBtn" class="btn btn-warning" title="Demonstrates setTimeout (delays reminder by 5 seconds)">
+                ⏱️ Snooze Reminder (5s Demo)
+              </button>
+              <button id="resetCountdownBtn" class="btn btn-outline">Reset Default</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Study Pomodoro Timer (Demonstrating setInterval & setTimeout together) -->
+        <div class="pomodoro-section">
+          <div class="section-title-sm">
+            <span>⚡ Quick Study Focus Timer</span>
+            <span class="timer-badge" id="focusTimerStatus">READY</span>
+          </div>
+
+          <div class="pomodoro-display">
+            <div class="pomodoro-digits" id="focusTimeDisplay">25:00</div>
+          </div>
+
+          <div class="pomodoro-preset-buttons">
+            <button class="btn btn-sm btn-pill" data-minutes="25">25m Study</button>
+            <button class="btn btn-sm btn-pill" data-minutes="15">15m Review</button>
+            <button class="btn btn-sm btn-pill" data-minutes="5">5m Break</button>
+            <button class="btn btn-sm btn-pill" data-minutes="1">1m Test Demo</button>
+          </div>
+
+          <div class="button-group center-btn">
+            <button id="startFocusBtn" class="btn btn-success">Start Focus</button>
+            <button id="pauseFocusBtn" class="btn btn-warning" disabled>Pause</button>
+            <button id="resetFocusBtn" class="btn btn-outline">Reset</button>
+          </div>
+        </div>
+
+        <!-- Technical Verification Panel (Shows Active JavaScript Timers & ES6 Modules) -->
+        <div class="tech-monitor-card">
+          <div class="tech-monitor-title">⚙️ Lab Concepts Diagnostic Monitor</div>
+          <div class="tech-grid">
+            <div class="tech-item">
+              <span class="tech-name">setInterval() Status:</span>
+              <span class="tech-val active" id="diagIntervalStatus">3 Active Timers</span>
+            </div>
+            <div class="tech-item">
+              <span class="tech-name">setTimeout() Status:</span>
+              <span class="tech-val" id="diagTimeoutStatus">Standby (0 pending)</span>
+            </div>
+            <div class="tech-item">
+              <span class="tech-name">ES6 Module Export:</span>
+              <span class="tech-val success" id="diagExportStatus">Active (4 functions)</span>
+            </div>
+            <div class="tech-item">
+              <span class="tech-name">ES6 Module Import:</span>
+              <span class="tech-val success" id="diagImportStatus">Active (Config Module)</span>
+            </div>
+          </div>
+          <div class="timer-log-stream" id="timerLogStream">
+            <div class="log-entry system">[00:00:00] System initialized. Timers configured.</div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Modal to Add Custom Lecture -->
+    <div id="addClassModal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Add New Class to Schedule</h3>
+          <button id="closeModalBtn" class="modal-close">&times;</button>
+        </div>
+        <form id="addClassForm">
+          <div class="form-group">
+            <label for="newSubject">Subject Name:</label>
+            <input type="text" id="newSubject" class="form-control" placeholder="e.g., Advanced JavaScript" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="newFaculty">Faculty / Professor:</label>
+              <input type="text" id="newFaculty" class="form-control" placeholder="e.g., Dr. Sharma" required>
+            </div>
+            <div class="form-group flex-1">
+              <label for="newRoom">Room / Lab No.:</label>
+              <input type="text" id="newRoom" class="form-control" placeholder="e.g., Lab 304" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="newDay">Day of Week:</label>
+              <select id="newDay" class="form-control" required>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+              </select>
+            </div>
+            <div class="form-group flex-1">
+              <label for="newStartTime">Start Time (24h):</label>
+              <input type="time" id="newStartTime" class="form-control" required>
+            </div>
+            <div class="form-group flex-1">
+              <label for="newEndTime">End Time (24h):</label>
+              <input type="time" id="newEndTime" class="form-control" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="cancelModalBtn" class="btn btn-outline">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save to Schedule</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>JavaScript Lab Practical 11 &bull; Timers (<code>setTimeout</code>, <code>setInterval</code>) &amp; ES6 Modules (<code>import</code>/<code>export</code>)</p>
+    </footer>
+  </div>
+
+  <!-- Load JavaScript File as an ES6 Module -->
+  <script type="module" src="script.js"></script>
+
+</body>
+</html>
